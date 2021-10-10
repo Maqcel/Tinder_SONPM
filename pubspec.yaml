@@ -1,0 +1,69 @@
+name: tinder
+description: Mobile application for SONPM lecture
+
+# Prevent accidental publishing to pub.dev.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  #Localizations 
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
+  #Architecture
+  get_it: ^7.2.0
+  flutter_bloc: ^7.3.0
+
+  #Assets
+  google_fonts: ^2.1.0
+
+  #Utility
+  dartz: ^0.10.0
+  equatable: ^2.0.3
+  email_validator: ^2.0.1
+
+  #Firebase
+  cloud_firestore: ^2.5.3
+  firebase_core: ^1.6.0
+  firebase_auth: ^3.1.3
+  firebase_crashlytics: ^2.2.1
+  firebase_analytics: ^8.3.2
+  firebase_performance: ^0.7.1+1
+
+  #Serialization
+  json_annotation: ^4.1.0
+
+dependency_overrides: 
+  analyzer: 2.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  #Code gen build runner
+  build_runner: ^2.1.2
+  flutter_gen_runner: ^4.0.0
+  json_serializable: ^5.0.2
+
+  #Static analysis
+  flutter_lints: ^1.0.4
+
+flutter:
+  uses-material-design: true
+
+  # Disabled because of conflict with flutter_gen
+  # https://github.com/dart-lang/build/issues/2835
+  generate: false
+  assets:
+    - assets/images/
+
+flutter_gen:
+  output: lib/gen/

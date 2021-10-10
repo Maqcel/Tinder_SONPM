@@ -1,0 +1,6 @@
+{
+    "helloWorld": "hello world",
+    "@helloWorld": {
+      "description": "Text mostly for non technical ppl to show them where it is used to make translations easier for them"
+    }
+}
