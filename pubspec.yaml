@@ -24,6 +24,7 @@ dependencies:
 
   #Assets
   google_fonts: ^2.1.0
+  flutter_svg: 0.23.0+1
 
   #Utility
   dartz: ^0.10.0
@@ -42,7 +43,7 @@ dependencies:
   json_annotation: ^4.1.0
 
 dependency_overrides: 
-  analyzer: 2.3.0
+  analyzer: 2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +64,10 @@ flutter:
   # https://github.com/dart-lang/build/issues/2835
   generate: false
   assets:
-    - assets/images/
+    - assets/images/icons/
+    - assets/images/splash/
 
 flutter_gen:
   output: lib/gen/
+  integrations:
+    flutter_svg: true

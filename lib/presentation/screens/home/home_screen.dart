@@ -1,36 +1,67 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinder/config/dimensions/icon_dimension.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
-import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation_cubit.dart';
+import 'package:tinder/presentation/screens/home/home_screen_page_provider.dart';
+import 'package:tinder/presentation/screens/home/home_screen_page_type.dart';
+import 'package:tinder/presentation/screens/home/navigation/cubit/home_navigation_cubit.dart';
+import 'package:tinder/presentation/screens/home/navigation/home_screen_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final HomeScreenRouter _routerDelegate = HomeScreenRouter();
+  ChildBackButtonDispatcher? _backButtonDispatcher;
+
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _testLogOut(context),
-      child: Scaffold(
-        backgroundColor: Colors.blueAccent,
-        body: Center(
-          child: Text(
-            context.localizations.homeText,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    );
+  void didChangeDependencies() {
+    _initBackButtonDispatcher();
+    super.didChangeDependencies();
   }
 
-  // FIXME: Remove this just temporary demo
-  Future<void> _testLogOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    context.read<UserSessionNavigationCubit>().onUserSessionStateChanged();
+  void _initBackButtonDispatcher() {
+    _backButtonDispatcher ??=
+        ChildBackButtonDispatcher(context.router.backButtonDispatcher!);
+    _backButtonDispatcher?.takePriority();
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocBuilder<HomeNavigationCubit, HomeNavigationState>(
+        builder: (context, state) => _body(state),
+      );
+
+  Widget _body(HomeNavigationState state) => Scaffold(
+        body: Router(
+          routerDelegate: _routerDelegate,
+          backButtonDispatcher: _backButtonDispatcher,
+        ),
+        bottomNavigationBar: _bottomNavigationBar(state),
+      );
+
+  BottomNavigationBar _bottomNavigationBar(HomeNavigationState state) =>
+      BottomNavigationBar(
+        iconSize: IconDimension.small,
+        items: HomeScreenPageProvider.getBottomNavBarItems(context),
+        currentIndex: HomeScreenPageProvider.getIndexByState(state),
+        onTap: (index) => _onSelectedPageIndexChanged(index),
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+      );
+
+  void _onSelectedPageIndexChanged(int newIndex) {
+    HomeScreenPageType selectedPageType =
+        HomeScreenPageProvider.getPageTypeByIndex(newIndex);
+
+    context
+        .read<HomeNavigationCubit>()
+        .onSelectedPageTypeChanged(selectedPageType);
   }
 }

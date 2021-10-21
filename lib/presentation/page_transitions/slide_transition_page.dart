@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinder/config/dimensions/animation_dimension.dart';
 import 'package:tinder/routing/route_definition.dart';
 
 class SlideTransitionPage<T> extends Page<T> {
@@ -9,7 +10,7 @@ class SlideTransitionPage<T> extends Page<T> {
     required String name,
     required LocalKey? key,
     required this.child,
-    this.duration = const Duration(milliseconds: 600),
+    this.duration = AnimationDimension.durationLong,
   }) : super(key: key, name: name);
 
   factory SlideTransitionPage.fromRoute({

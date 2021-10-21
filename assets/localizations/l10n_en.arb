@@ -6,5 +6,17 @@
     "homeText": "Home Screen\nTap to log out\nAuto Login works",
     "@homeText": {
       "description": "Text shown on home screen"
+    },
+    "chatText": "Chat Screen",
+    "@chatText": {
+      "description": "Text shown on chat screen"
+    },
+    "possibleMatchText": "Possible Match Screen",
+    "@possibleMatchText": {
+      "description": "Text shown on possible match screen"
+    },
+    "profileText": "Profile Screen",
+    "@profileText": {
+      "description": "Text shown on profile screen"
     }
 }
