@@ -1,6 +1,10 @@
 {
-    "helloWorld": "hello world",
-    "@helloWorld": {
-      "description": "Text mostly for non technical ppl to show them where it is used to make translations easier for them"
+    "loginText": "Login Screen\nTap to log in",
+    "@loginText": {
+      "description": "Text shown on login screen"
+    },
+    "homeText": "Home Screen\nTap to log out\nAuto Login works",
+    "@homeText": {
+      "description": "Text shown on home screen"
     }
 }
