@@ -7,6 +7,10 @@ import 'package:tinder/presentation/screens/auth/login/cubit/login_screen_cubit.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
+  // final String _assetName = 'assets/image.svg';
+  // const Widget svg =
+  //     SvgPicture.asset('assets/image.svg', semanticsLabel: 'Acme Logo');
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -23,9 +27,30 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _body(LoginScreenState state) => GestureDetector(
         onTap: _onLoginButtonClicked,
         child: Scaffold(
-          backgroundColor: Colors.yellow,
-          body: Center(child: Text(context.localizations.loginText)),
-        ),
+            backgroundColor: const Color.fromRGBO(255, 87, 100, 1),
+            body: Container(
+              // TODO: how to center it properly
+              margin: const EdgeInsets.only(left: 125, top: 300),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      // TODO: why this is not working?
+                      // Image(image: AssetImage('tinder_white.svg')),
+                      // TODO: change icon to tinder one
+                      Icon(Icons.settings_display_sharp,
+                          color: Colors.white, size: 55),
+                      Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            "tinder",
+                            style: TextStyle(fontSize: 55, color: Colors.white),
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+            )),
       );
 
   // FIXME: Temporary method
