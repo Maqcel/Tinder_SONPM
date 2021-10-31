@@ -22,4 +22,20 @@ class AppRoutes {
     name: '/home',
     valueKey: ValueKey('home'),
   );
+  static RouteDefinition homePeople = const RouteDefinition(
+    name: '/home/people',
+    valueKey: ValueKey('people'),
+  );
+  static RouteDefinition homeChatList = const RouteDefinition(
+    name: '/home/chat-list',
+    valueKey: ValueKey('chat-list'),
+  );
+  static RouteDefinition homePossibleMatch = const RouteDefinition(
+    name: '/home/possible-match',
+    valueKey: ValueKey('possible-match'),
+  );
+  static RouteDefinition homeProfile = const RouteDefinition(
+    name: '/home/profile',
+    valueKey: ValueKey('profile'),
+  );
 }

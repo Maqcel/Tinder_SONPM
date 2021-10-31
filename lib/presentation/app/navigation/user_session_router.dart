@@ -3,7 +3,7 @@ import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation
 import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/slide_transition_page.dart';
 import 'package:tinder/presentation/screens/auth/auth_screen.dart';
-import 'package:tinder/presentation/screens/home/home_screen.dart';
+import 'package:tinder/presentation/screens/main/main_screen.dart';
 import 'package:tinder/presentation/screens/splash/splash_screen.dart';
 import 'package:tinder/routing/app_routes.dart';
 
@@ -34,7 +34,7 @@ class UserSessionRouter extends CubitRouter<UserSessionNavigationCubit,
         SlideTransitionPage<void>(
           name: AppRoutes.home.name,
           key: AppRoutes.home.valueKey,
-          child: const HomeScreen(),
+          child: const MainScreen(),
         ),
       );
     }
