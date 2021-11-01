@@ -5,4 +5,6 @@ extension ContextProvider on BuildContext {
   AppLocalizations get localizations => AppLocalizations.of(this)!;
   Router get router => Router.of(this);
   FocusScopeNode get focusScope => FocusScope.of(this);
+  ThemeData get theme => Theme.of(this);
+  NavigatorState get navigator => Navigator.of(this);
 }

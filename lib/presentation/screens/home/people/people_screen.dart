@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinder/domain/common/failure.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation_cubit.dart';
+import 'package:tinder/presentation/common/screen_failure_handler.dart';
 
 class PeopleScreen extends StatefulWidget {
   const PeopleScreen({Key? key}) : super(key: key);
@@ -12,10 +14,14 @@ class PeopleScreen extends StatefulWidget {
   _PeopleScreenState createState() => _PeopleScreenState();
 }
 
-class _PeopleScreenState extends State<PeopleScreen> {
+class _PeopleScreenState extends State<PeopleScreen> with ScreenFailureHandler {
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: () => _testLogOut(context),
+        onTap: () => handleFailureInUi(
+          context: context,
+          failure: Failure.unexpected(),
+          onFailureAcknowledged: () => _testLogOut(context),
+        ),
         child: Scaffold(
           appBar: AppBar(
             leading:
