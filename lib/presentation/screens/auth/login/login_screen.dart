@@ -51,6 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.center,
                 child: Row(
                   children: [
+                    // TODO: why image is not working
+                    // const Image(image: AssetImage('assets/images/icons/tinder_white.svg')),
                     Container(
                       margin: const EdgeInsets.only(left: 100, top: 200),
                       child: const Icon(Icons.settings_display_sharp,
@@ -68,24 +70,24 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 120, bottom: 35),
-                child: const Text(
-                  "By tapping “Create account” or “Sign in”, you\nagree to our Terms. Learn how we process your\ndata in our Privacy Polity and Cookies Policy.\n",
-                  style: TextStyle(color: Colors.white),
+                child: Text(
+                  context.localizations.policyText,
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(bottom: 20,right: 10, left:10),
+                margin: const EdgeInsets.only(bottom: 20, right: 10, left: 10),
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text('CREATE ACCOUNT'),
+                  child: Text(context.localizations.createAccountButton),
                   style: createAccountButtonStyles,
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(bottom: 20, right: 10, left:10),
+                margin: const EdgeInsets.only(bottom: 20, right: 10, left: 10),
                 child: OutlinedButton(
-                    onPressed: () {},
-                    child: Text('SIGN IN'),
+                    onPressed: _onLoginButtonClicked,
+                    child: Text(context.localizations.signInButton),
                     style: signInButtonStyles),
               ),
             ],
@@ -109,6 +111,3 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
-
-// TODO: how to handle assets?
-// TODO: how to handle strings?

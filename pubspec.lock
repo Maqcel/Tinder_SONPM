@@ -203,7 +203,7 @@ packages:
       name: dartx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.1"
+    version: "0.8.0"
   dartz:
     dependency: "direct main"
     description:

@@ -22,5 +22,17 @@
   "profileText": "Profile Screen",
   "@profileText": {
     "description": "Text shown on profile screen"
+  },
+  "policyText": "By tapping “Create account” or “Sign in”, you\nagree to our Terms. Learn how we process your\ndata in our Privacy Polity and Cookies Policy.\n",
+  "@policyText": {
+    "description": "Text explaining application policy"
+  },
+  "createAccountButton": "CREATE ACCOUNT",
+  "@createAccountButton": {
+    "description": "Text that is being shown on create account button"
+  },
+  "signInButton": "SIGN IN",
+  "@signInButton": {
+    "description": "Text that is being shown on sign in button"
   }
 }
