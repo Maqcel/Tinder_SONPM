@@ -7,10 +7,6 @@ import 'package:tinder/presentation/screens/auth/login/cubit/login_screen_cubit.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  // final String _assetName = 'assets/image.svg';
-  // const Widget svg =
-  //     SvgPicture.asset('assets/image.svg', semanticsLabel: 'Acme Logo');
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -23,34 +19,78 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) => _onStateChanged(state),
       );
 
-  // TODO: Implement content
+  final ButtonStyle createAccountButtonStyles = ElevatedButton.styleFrom(
+    primary: Colors.white,
+    onPrimary: Colors.black,
+    minimumSize: const Size(500, 50),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(50)),
+        side: BorderSide(width: 1, color: Colors.white)),
+  );
+
+  final ButtonStyle signInButtonStyles = OutlinedButton.styleFrom(
+    primary: Colors.white,
+    minimumSize: const Size(500, 50),
+    side: const BorderSide(
+      width: 1.0,
+      color: Colors.white,
+    ),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(50)),
+    ),
+  );
+
   Widget _body(LoginScreenState state) => GestureDetector(
         onTap: _onLoginButtonClicked,
         child: Scaffold(
-            backgroundColor: const Color.fromRGBO(255, 87, 100, 1),
-            body: Container(
-              // TODO: how to center it properly
-              margin: const EdgeInsets.only(left: 125, top: 300),
-              child: Column(
-                children: [
-                  Row(
-                    children: const [
-                      // TODO: why this is not working?
-                      // Image(image: AssetImage('tinder_white.svg')),
-                      // TODO: change icon to tinder one
-                      Icon(Icons.settings_display_sharp,
+          backgroundColor: const Color.fromRGBO(255, 87, 100, 1),
+          body: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 100, top: 200),
+                      child: const Icon(Icons.settings_display_sharp,
                           color: Colors.white, size: 55),
-                      Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text(
-                            "tinder",
-                            style: TextStyle(fontSize: 55, color: Colors.white),
-                          ))
-                    ],
-                  ),
-                ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 10, top: 200),
+                      child: const Text(
+                        "tinder",
+                        style: TextStyle(fontSize: 55, color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            )),
+              Container(
+                margin: const EdgeInsets.only(top: 120, bottom: 35),
+                child: const Text(
+                  "By tapping “Create account” or “Sign in”, you\nagree to our Terms. Learn how we process your\ndata in our Privacy Polity and Cookies Policy.\n",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20,right: 10, left:10),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('CREATE ACCOUNT'),
+                  style: createAccountButtonStyles,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20, right: 10, left:10),
+                child: OutlinedButton(
+                    onPressed: () {},
+                    child: Text('SIGN IN'),
+                    style: signInButtonStyles),
+              ),
+            ],
+          ),
+        ),
       );
 
   // FIXME: Temporary method
@@ -69,3 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
+
+// TODO: how to handle assets?
+// TODO: how to handle strings?
