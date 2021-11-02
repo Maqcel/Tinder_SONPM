@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tinder/domain/common/failure.dart';
@@ -24,14 +25,38 @@ class UserRepository {
     required String password,
   }) async =>
       genericCall<UserCredential>(
-        functionWithReturn: () =>
-            FirebaseAuth.instance.createUserWithEmailAndPassword(
+        functionWithReturn: () => _signUpAndCreateUser(
           email: email,
           password: password,
         ),
         failure: const AuthorizationFailure(
             message: 'Signup unsuccessful, try again!'),
       );
+
+  Future<UserCredential> _signUpAndCreateUser({
+    required String email,
+    required String password,
+  }) async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+    User user = userCredential.user!;
+
+    DocumentReference userReference =
+    FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+    await userReference.set({
+      'name': null,
+      'phone_number': null,
+      'gender': null,
+      'bio': null,
+      'location': {'lat': null, 'lon': null},
+      'birth_date': null,
+      'passions': [],
+      'profile_photo_path': null
+    });
+
+    return userCredential;
+  }  
 
   Future<void> logout() async => await FirebaseAuth.instance.signOut();
 }
