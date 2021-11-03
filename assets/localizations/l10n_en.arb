@@ -34,5 +34,9 @@
   "signInButton": "SIGN IN",
   "@signInButton": {
     "description": "Text that is being shown on sign in button"
+  },
+  "appName": "tinder",
+  "@appName": {
+    "description": "name of the application"
   }
 }
