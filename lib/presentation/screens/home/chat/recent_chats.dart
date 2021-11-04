@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class RecentChats extends StatelessWidget {
-
   Widget _headerRow() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
-      child: Row(children: <Widget>[
+      child: Row(children: const <Widget>[
         Text(
           'Wiadomości',
           style: TextStyle(
@@ -68,7 +67,7 @@ class RecentChats extends StatelessWidget {
           shrinkWrap: true,
           physics: ScrollPhysics(),
           itemCount: 8,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (context, index) {
             return GestureDetector(onTap: () => {}, child: _chatItem(context));
           })
     ]);

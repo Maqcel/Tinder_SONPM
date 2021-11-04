@@ -42,7 +42,7 @@ class UserRepository {
     User user = userCredential.user!;
 
     DocumentReference userReference =
-    FirebaseFirestore.instance.collection('users').doc(user.uid);
+        FirebaseFirestore.instance.collection('users').doc(user.uid);
 
     await userReference.set({
       'name': null,
@@ -56,7 +56,7 @@ class UserRepository {
     });
 
     return userCredential;
-  }  
+  }
 
   Future<void> logout() async => await FirebaseAuth.instance.signOut();
 }

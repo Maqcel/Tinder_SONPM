@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class NewPairs extends StatelessWidget {
-
   Widget _headerRow() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
@@ -22,7 +21,7 @@ class NewPairs extends StatelessWidget {
   Widget _pairItem() {
     return Padding(
         padding: EdgeInsets.all(10.0),
-        child: Column(children: <Widget>[
+        child: Column(children: const <Widget>[
           CircleAvatar(radius: 35.0, backgroundColor: Colors.grey),
           SizedBox(height: 6.0),
           Text(
@@ -46,7 +45,7 @@ class NewPairs extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               scrollDirection: Axis.horizontal,
               itemCount: 8,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (context, index) {
                 return GestureDetector(onTap: () => {}, child: _pairItem());
               }),
         )
