@@ -66,10 +66,6 @@ flutter:
   assets:
     - assets/images/icons/
     - assets/images/splash/
-  fonts:
-    - family: Quicksand
-    fonts:
-      - asset: assets/fonts/Quicksand-Medium.ttf
 
 flutter_gen:
   output: lib/gen/
