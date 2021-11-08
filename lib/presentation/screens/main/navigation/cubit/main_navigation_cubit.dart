@@ -22,6 +22,9 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
   @override
   void onRoutePop(String? routeName) {
     super.onRoutePop(routeName);
+    if (routeName == AppRoutes.chatListConversation.name) {
+      _onChatConversationPop();
+    }
     // if (routeName == AppRoutes.someRoute.name) {
     //   _onSomePop();
     // } else if (routeName == AppRoutes.otherRoute.name) {
@@ -32,6 +35,14 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
     //   onUnknownRouteName(routeName);
     // }
   }
+
+  void _onChatConversationPop() => emit(MainNavigationHome(
+        previousRoute: AppRoutes.chatListConversation,
+      ));
+
+  void chatListToConversation() => emit(MainNavigationChatConversation(
+        previousRoute: AppRoutes.chatList,
+      ));
 
   // void _onSomePop() => emit(MainNavigationHome(
   //       previousRoute: AppRoutes.someRoute,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/fade_transition_page.dart';
 import 'package:tinder/presentation/screens/home/chat/chat_screen.dart';
+import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
 import 'package:tinder/presentation/screens/home/navigation/cubit/home_navigation_cubit.dart';
 import 'package:tinder/presentation/screens/home/people/people_screen.dart';
 import 'package:tinder/presentation/screens/home/possible_match/possible_match_screen.dart';
@@ -27,8 +29,11 @@ class HomeScreenRouter
 
     if (state is HomeChat) {
       pageStack.add(FadeTransitionPage.fromRoute(
-        route: AppRoutes.homeChatList,
-        child: const ChatScreen(),
+        route: AppRoutes.homeChat,
+        child: BlocProvider<ChatScreenCubit>(
+          create: (context) => ChatScreenCubit(),
+          child: const ChatScreen(),
+        ),
       ));
     }
 
