@@ -26,9 +26,21 @@ class AppRoutes {
     name: '/home/people',
     valueKey: ValueKey('people'),
   );
-  static RouteDefinition homeChatList = const RouteDefinition(
-    name: '/home/chat-list',
+  static RouteDefinition homeChat = const RouteDefinition(
+    name: '/home/chat',
+    valueKey: ValueKey('chat'),
+  );
+  static RouteDefinition chatList = const RouteDefinition(
+    name: '/chat/chat-list',
     valueKey: ValueKey('chat-list'),
+  );
+  static RouteDefinition chatListConversation = const RouteDefinition(
+    name: '/chat/conversation',
+    valueKey: ValueKey('conversation'),
+  );
+  static RouteDefinition conversationChatterProfile = const RouteDefinition(
+    name: '/chat/conversation/chatter-profile',
+    valueKey: ValueKey('chatter-profile'),
   );
   static RouteDefinition homePossibleMatch = const RouteDefinition(
     name: '/home/possible-match',

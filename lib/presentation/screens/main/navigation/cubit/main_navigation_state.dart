@@ -16,3 +16,11 @@ class MainNavigationHome extends MainNavigationState {
           previousRoute: previousRoute,
         );
 }
+
+class MainNavigationChatConversation extends MainNavigationState {
+  const MainNavigationChatConversation({
+    required RouteDefinition previousRoute,
+  }) : super(
+          previousRoute: previousRoute,
+        );
+}

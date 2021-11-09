@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/slide_transition_page.dart';
+import 'package:tinder/presentation/screens/home/chat/conversation/conversation_screen.dart';
 import 'package:tinder/presentation/screens/home/home_screen.dart';
 import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
 import 'package:tinder/routing/app_routes.dart';
@@ -27,6 +28,13 @@ class MainRouter
       route: AppRoutes.home,
       child: const HomeScreen(),
     ));
+
+    if (state is MainNavigationChatConversation) {
+      pageStack.add(SlideTransitionPage.fromRoute(
+        route: AppRoutes.chatListConversation,
+        child: const ConversationScreen(),
+      ));
+    }
 
     return pageStack;
   }
