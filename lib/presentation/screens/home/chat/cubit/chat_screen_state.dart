@@ -7,14 +7,30 @@ abstract class ChatScreenState extends Equatable {
   List<Object> get props => [];
 }
 
-class ChatScreenLoading extends ChatScreenState {}
+class ChatLoading extends ChatScreenState {}
 
-class ChatScreenLoaded extends ChatScreenState {}
+class ChatLoaded extends ChatScreenState {
+  final List<Chat> chats;
 
-class ChatScreenLoadError extends ChatScreenState {
+  const ChatLoaded({required this.chats});
+
+  @override
+  List<Object> get props => [chats];
+}
+
+class ChatLoadError extends ChatScreenState {
   final Failure failure;
 
-  const ChatScreenLoadError({required this.failure});
+  const ChatLoadError({required this.failure});
+
+  @override
+  List<Object> get props => [failure];
+}
+
+class ChatRefreshError extends ChatScreenState {
+  final Failure failure;
+
+  const ChatRefreshError({required this.failure});
 
   @override
   List<Object> get props => [failure];

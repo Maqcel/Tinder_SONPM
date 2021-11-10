@@ -45,15 +45,15 @@ class _ChatScreenState extends State<ChatScreen> with ScreenFailureHandler {
     ChatScreenState previous,
     ChatScreenState current,
   ) =>
-      (current is ChatScreenLoading || current is ChatScreenLoaded);
+      (current is ChatLoading || current is ChatLoaded);
 
   // TODO: Implement content
   // Control what should be build
-  Widget _body(ChatScreenState state) => Scaffold(
-        backgroundColor: Colors.red,
-        body: Center(
-          child: GestureDetector(
-            onTap: () => _onChatTileClicked(),
+  Widget _body(ChatScreenState state) => GestureDetector(
+        onTap: () => _onChatTileClicked(),
+        child: Scaffold(
+          backgroundColor: Colors.red,
+          body: Center(
             child: Text(context.localizations.chatText),
           ),
         ),
@@ -65,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> with ScreenFailureHandler {
   // Control if some action should happen on the screen on some state
   // eg. show dialog with error
   void _onStateChanged(ChatScreenState state) {
-    if (state is ChatScreenLoadError) {
+    if (state is ChatLoadError) {
       handleFailureInUi(context: context, failure: state.failure);
     }
   }
