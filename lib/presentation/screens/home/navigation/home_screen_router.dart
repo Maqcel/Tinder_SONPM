@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinder/domain/repositories/chat_repository.dart';
 import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/fade_transition_page.dart';
 import 'package:tinder/presentation/screens/home/chat/chat_screen.dart';
@@ -31,7 +32,9 @@ class HomeScreenRouter
       pageStack.add(FadeTransitionPage.fromRoute(
         route: AppRoutes.homeChat,
         child: BlocProvider<ChatScreenCubit>(
-          create: (context) => ChatScreenCubit(),
+          create: (context) => ChatScreenCubit(
+            chatRepository: context.read<ChatRepository>(),
+          ),
           child: const ChatScreen(),
         ),
       ));
