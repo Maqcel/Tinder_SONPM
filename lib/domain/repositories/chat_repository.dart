@@ -26,12 +26,13 @@ class ChatRepository {
         .snapshots();
   }
 
-  List<Chat> getChatsFromSnapshot(QuerySnapshot snapshot, String uid) =>
+  Future<List<Chat>> getChatsFromSnapshot(
+          QuerySnapshot snapshot, String uid) async =>
       snapshot.docs
           .map((doc) => Chat.fromDto(
                 ChatResponseDTO.fromFirestore(
                   doc.id,
-                  {'chatters': doc.data()},
+                  doc.data() as Map<String, dynamic>,
                 ),
                 uid,
               ))

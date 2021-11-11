@@ -24,9 +24,11 @@ class ChatScreenCubit extends Cubit<ChatScreenState> {
           .listen((snapshot) => _onSnapshot(snapshot));
 
   // FIXME: Remove hardcoded uid
-  void _onSnapshot(QuerySnapshot snapshot) => emit(ChatLoaded(
-        chats: _chatRepository.getChatsFromSnapshot(
-            snapshot, 'hUTjuJwylLWR04yDtpOPnC9JhY53'),
+  Future<void> _onSnapshot(QuerySnapshot snapshot) async => emit(ChatLoaded(
+        chats: await _chatRepository.getChatsFromSnapshot(
+          snapshot,
+          'hUTjuJwylLWR04yDtpOPnC9JhY53',
+        ),
       ));
 
   @override

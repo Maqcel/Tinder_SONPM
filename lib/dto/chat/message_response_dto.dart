@@ -29,9 +29,9 @@ class MessageResponseDTO {
     String documentId,
     Map<String, dynamic> json,
   ) =>
-      MessageResponseDTO._fromJson(json)..id = documentId;
+      MessageResponseDTO.fromJson(json)..id = documentId;
 
-  factory MessageResponseDTO._fromJson(Map<String, dynamic> json) =>
+  factory MessageResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$MessageResponseDTOFromJson(json);
 
   static DateTime _dateTimeFromTimestamp(Timestamp timestamp) =>
