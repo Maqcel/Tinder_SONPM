@@ -165,6 +165,8 @@ class ChatListBuilder {
             chat.mostRecentMessage!.messageText,
             style: context.theme.textTheme.bodyText1
                 ?.copyWith(color: ColorPalette.grayLight),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       );

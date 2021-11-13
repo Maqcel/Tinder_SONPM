@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinder/domain/repositories/auth_repository.dart';
+import 'package:tinder/domain/repositories/chat_repository.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
+import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
 import 'package:tinder/presentation/screens/main/navigation/main_router.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,9 +30,19 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Router(
-        routerDelegate: _routerDelegate,
-        backButtonDispatcher: _backButtonDispatcher,
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<ChatScreenCubit>(
+            create: (context) => ChatScreenCubit(
+              chatRepository: context.read<ChatRepository>(),
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+        ],
+        child: Router(
+          routerDelegate: _routerDelegate,
+          backButtonDispatcher: _backButtonDispatcher,
+        ),
       );
   // MultiBlocProvider(
   //       providers: const [
@@ -43,6 +57,7 @@ class _MainScreenState extends State<MainScreen> {
   /// Ofc if they will require cubit but those 4 will :)
   ///
   /// BlocProvider<ProfileScreenCubit>(
+  /// this ensure that cubit will stay in memory even after switching the screen
   ///   lazy: true,
   ///   create: (context) => ProfileScreenCubit(),
   /// ),

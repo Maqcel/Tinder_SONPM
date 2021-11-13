@@ -42,6 +42,7 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
       ));
 
   void chatListToConversation(Chat chat) => emit(MainNavigationChatConversation(
+        chat: chat,
         previousRoute: AppRoutes.chatList,
       ));
 

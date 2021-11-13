@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinder/domain/repositories/auth_repository.dart';
+import 'package:tinder/domain/repositories/chat_repository.dart';
 import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/slide_transition_page.dart';
 import 'package:tinder/presentation/screens/home/chat/conversation/conversation_screen.dart';
+import 'package:tinder/presentation/screens/home/chat/conversation/cubit/conversation_screen_cubit.dart';
 import 'package:tinder/presentation/screens/home/home_screen.dart';
 import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
 import 'package:tinder/routing/app_routes.dart';
@@ -32,7 +36,13 @@ class MainRouter
     if (state is MainNavigationChatConversation) {
       pageStack.add(SlideTransitionPage.fromRoute(
         route: AppRoutes.chatListConversation,
-        child: const ConversationScreen(),
+        child: BlocProvider<ConversationScreenCubit>(
+          create: (context) => ConversationScreenCubit(
+            chatRepository: context.read<ChatRepository>(),
+            authRepository: context.read<AuthRepository>(),
+          ),
+          child: ConversationScreen(chat: state.chat),
+        ),
       ));
     }
 

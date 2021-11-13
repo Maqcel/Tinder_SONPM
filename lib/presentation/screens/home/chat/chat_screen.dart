@@ -9,6 +9,7 @@ import 'package:tinder/presentation/common/screen_failure_handler.dart';
 import 'package:tinder/presentation/screens/home/chat/chat_list_builder.dart';
 import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
 import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
+import 'package:tinder/routing/app_routes.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -21,18 +22,26 @@ class _ChatScreenState extends State<ChatScreen> with ScreenFailureHandler {
   @override
   void initState() {
     super.initState();
-    context
-        .read<ChatScreenCubit>()
-        .onScreenOpened('hUTjuJwylLWR04yDtpOPnC9JhY53');
+    context.read<ChatScreenCubit>().onScreenOpened();
   }
 
   @override
   Widget build(BuildContext context) =>
-      BlocConsumer<ChatScreenCubit, ChatScreenState>(
-        buildWhen: (previous, current) => _buildWhen(previous, current),
-        builder: (context, state) => _body(state),
-        listener: (context, state) => _onStateChanged(state),
+      BlocListener<MainNavigationCubit, MainNavigationState>(
+        listener: (context, state) => _onMainNavigationStateChanged(state),
+        child: BlocConsumer<ChatScreenCubit, ChatScreenState>(
+          buildWhen: (previous, current) => _buildWhen(previous, current),
+          builder: (context, state) => _body(state),
+          listener: (context, state) => _onStateChanged(state),
+        ),
       );
+
+  void _onMainNavigationStateChanged(MainNavigationState state) {
+    if (state is MainNavigationHome &&
+        state.previousRoute == AppRoutes.chatListConversation) {
+      context.read<ChatScreenCubit>().onScreenOpened();
+    }
+  }
 
   bool _buildWhen(
     ChatScreenState previous,

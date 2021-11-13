@@ -46,5 +46,17 @@
   "chatHasMatchesMatchesText": "Messages",
   "@chatHasMatchesMatchesText": {
     "description": "Header text displayed on chat screen as section with matches with messages"
+  },
+  "chatMatchesNoMessagesTitleText": "You've matched with - ",
+  "@chatMatchesNoMessagesTitleText": {
+    "description": "Title text displayed when user has no messages with his match"
+  },
+  "chatMatchesNoMessagesBodyText": "Don't be shy start your conversation!",
+  "@chatMatchesNoMessagesBodyText": {
+    "description": "Bodytext displayed when user has no messages with his match"
+  },
+  "chatConversationInputHintText": "Type a message",
+  "@chatConversationInputHintText": {
+    "description": "Hint text displayed inside conversation input textfield"
   }
 }
