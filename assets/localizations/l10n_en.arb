@@ -30,5 +30,17 @@
   "dialogUnexpectedErrorButtonText": "OK",
   "@dialogUnexpectedErrorButtonText": {
     "description": "Text displayed on dismiss button on Unexpected Error dialog"
+  },
+  "chatNoMatchesCardText": "LIKE",
+  "@chatNoMatchesCardText": {
+    "description": "Text displayed on card when user has no matches"
+  },
+  "chatNoMatchesTitleText": "Get swiping",
+  "@chatNoMatchesTitleText": {
+    "description": "Title text displayed when user has no matches"
+  },
+  "chatNoMatchesBodyText": "When you match with other users they'll appear here, where you can send them a message",
+  "@chatNoMatchesBodyText": {
+    "description": "Bodytext displayed when user has no matches"
   }
 }

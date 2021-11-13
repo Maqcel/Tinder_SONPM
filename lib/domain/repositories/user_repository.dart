@@ -6,13 +6,13 @@ import 'package:tinder/domain/common/generic_call.dart';
 import 'package:tinder/domain/failures/authorization_failure.dart';
 
 class UserRepository {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<Either<Failure, UserCredential>> login({
     required String email,
     required String password,
   }) async =>
       genericCall<UserCredential>(
-        functionWithReturn: () =>
-            FirebaseAuth.instance.signInWithEmailAndPassword(
+        functionWithReturn: () => _firebaseAuth.signInWithEmailAndPassword(
           email: email,
           password: password,
         ),
@@ -37,7 +37,7 @@ class UserRepository {
     required String email,
     required String password,
   }) async {
-    UserCredential userCredential = await FirebaseAuth.instance
+    UserCredential userCredential = await _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password);
     User user = userCredential.user!;
 
@@ -63,5 +63,5 @@ class UserRepository {
     return userCredential;
   }
 
-  Future<void> logout() async => await FirebaseAuth.instance.signOut();
+  Future<void> logout() async => await _firebaseAuth.signOut();
 }

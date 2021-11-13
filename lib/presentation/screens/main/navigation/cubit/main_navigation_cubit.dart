@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tinder/domain/model/chat/chat.dart';
 import 'package:tinder/presentation/common/navigation/navigation_cubit.dart';
 import 'package:tinder/routing/app_routes.dart';
 import 'package:tinder/routing/route_definition.dart';
@@ -40,7 +41,7 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
         previousRoute: AppRoutes.chatListConversation,
       ));
 
-  void chatListToConversation() => emit(MainNavigationChatConversation(
+  void chatListToConversation(Chat chat) => emit(MainNavigationChatConversation(
         previousRoute: AppRoutes.chatList,
       ));
 
