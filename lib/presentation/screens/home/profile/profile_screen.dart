@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:tinder/config/theme/color_palette.dart';
+import 'package:tinder/config/dimensions/padding_dimension.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
+import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -35,52 +37,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ]),
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 40),
+          padding: const EdgeInsets.only(
+              left: PaddingDimension.large,
+              right: PaddingDimension.large,
+              bottom: PaddingDimension.large),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 140,
                 height: 140,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/david-dobrik-attends-build-brunch-to-discuss-his-recent-and-news-photo-1616503401.?crop=1xw:0.66667xh;center,top&resize=640:*"),
-                      fit: BoxFit.cover),
+                margin: const EdgeInsets.only(
+                  bottom: PaddingDimension.medium,
+                ),
+                child: ClipRRect(
+                  child: SavedStateNetworkImage(
+                    url:
+                        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/david-dobrik-attends-build-brunch-to-discuss-his-recent-and-news-photo-1616503401.?crop=1xw:0.66667xh;center,top&resize=640:*",
+                    fit: BoxFit.fitHeight,
+                    placeholder: (_, __) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  borderRadius: BorderRadius.circular(90),
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                'David, 22',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: PaddingDimension.medium,
                 ),
-              ),
-              const SizedBox(
-                height: 20,
+                child: Text(
+                  'David, 22',
+                  style: context.theme.textTheme.headline2,
+                ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  singleButton(
+                  _singleButton(
+                    context,
                     context.localizations.settingsText,
                     Icons.settings,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: 20,
+                      top: PaddingDimension.medium,
                     ),
                     child: Column(
                       children: [
                         Container(
                           width: 85,
                           height: 85,
+                          margin: const EdgeInsets.only(
+                            bottom: PaddingDimension.small,
+                          ),
                           child: Stack(
                             children: [
                               Container(
@@ -135,20 +146,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
                         Text(
                           context.localizations.addMediaText,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: ColorPalette.gray),
+                          style: context.theme.textTheme.bodyText1,
                         )
                       ],
                     ),
                   ),
-                  singleButton(
+                  _singleButton(
+                    context,
                     context.localizations.editText,
                     Icons.edit,
                   ),
@@ -162,12 +168,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-Widget singleButton(String text, IconData icon) {
+Widget _singleButton(BuildContext context, String text, IconData icon) {
   return Column(
     children: [
       Container(
         width: 60,
         height: 60,
+        margin: const EdgeInsets.only(
+          bottom: PaddingDimension.small,
+        ),
         decoration: BoxDecoration(
           color: ColorPalette.white,
           shape: BoxShape.circle,
@@ -185,16 +194,9 @@ Widget singleButton(String text, IconData icon) {
           color: ColorPalette.gray,
         ),
       ),
-      const SizedBox(
-        height: 10,
-      ),
       Text(
         text,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: ColorPalette.gray,
-        ),
+        style: context.theme.textTheme.bodyText1,
       )
     ],
   );
