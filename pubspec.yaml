@@ -16,20 +16,23 @@ dependencies:
   #Localizations 
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
+  intl: 0.17.0
 
   #Architecture
-  get_it: ^7.2.0
-  flutter_bloc: ^7.3.3
+  get_it: 7.2.0
+  flutter_bloc: 7.3.3
 
   #Assets
-  google_fonts: ^2.1.0
+  google_fonts: 2.1.0
   flutter_svg: 0.23.0+1
 
+  #UI
+  flutter_chat_ui: 1.5.0
+
   #Utility
-  dartz: ^0.10.0
-  equatable: ^2.0.3
-  email_validator: ^2.0.1
+  dartz: 0.10.0
+  equatable: 2.0.3
+  email_validator: 2.0.1
 
   #Firebase
   cloud_firestore: ^2.5.3
@@ -40,9 +43,12 @@ dependencies:
   firebase_performance: ^0.7.1+1
 
   #Serialization
-  json_annotation: ^4.1.0
+  json_annotation: 4.3.0
 
-dependency_overrides: 
+  #Networking
+  cached_network_image: 3.1.0
+
+dependency_overrides:
   analyzer: 2.6.0
 
 dev_dependencies:
@@ -50,12 +56,12 @@ dev_dependencies:
     sdk: flutter
   
   #Code gen build runner
-  build_runner: ^2.1.2
-  flutter_gen_runner: ^4.0.0
-  json_serializable: ^5.0.2
+  build_runner: 2.1.4
+  flutter_gen_runner: 4.0.1
+  json_serializable: 6.0.1
 
   #Static analysis
-  flutter_lints: ^1.0.4
+  flutter_lints: 1.0.4
 
 flutter:
   uses-material-design: true

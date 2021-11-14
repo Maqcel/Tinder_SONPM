@@ -1,10 +1,11 @@
 // This will create only fromJson method
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tinder/dto/chat/message_request_dto.dart';
 
 part 'message_response_dto.g.dart';
 
-@JsonSerializable(createToJson: false, ignoreUnannotated: true)
+@JsonSerializable(createToJson: false)
 class MessageResponseDTO {
   // This needs to be that way to not generate json conversion
   String? id;
@@ -12,7 +13,7 @@ class MessageResponseDTO {
   @JsonKey(name: 'messageText')
   final String messageText;
 
-  @JsonKey(fromJson: _dateTimeFromTimestamp)
+  @TimestampConverter()
   final DateTime sentAt;
 
   @JsonKey(name: 'sentBy')
@@ -29,11 +30,11 @@ class MessageResponseDTO {
     String documentId,
     Map<String, dynamic> json,
   ) =>
-      MessageResponseDTO._fromJson(json)..id = documentId;
+      MessageResponseDTO.fromJson(json)..id = documentId;
 
-  factory MessageResponseDTO._fromJson(Map<String, dynamic> json) =>
+  factory MessageResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$MessageResponseDTOFromJson(json);
 
-  static DateTime _dateTimeFromTimestamp(Timestamp timestamp) =>
-      DateTime.parse(timestamp.toDate().toString());
+  // static DateTime _dateTimeFromTimestamp(Timestamp timestamp) =>
+  //     DateTime.parse(timestamp.toDate().toString());
 }

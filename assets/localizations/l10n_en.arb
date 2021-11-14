@@ -7,10 +7,6 @@
   "@homeText": {
     "description": "Text shown on home screen"
   },
-  "chatText": "Chat Screen",
-  "@chatText": {
-    "description": "Text shown on chat screen"
-  },
   "possibleMatchText": "Possible Match Screen",
   "@possibleMatchText": {
     "description": "Text shown on possible match screen"
@@ -42,5 +38,25 @@
   "chatNoMatchesBodyText": "When you match with other users they'll appear here, where you can send them a message",
   "@chatNoMatchesBodyText": {
     "description": "Bodytext displayed when user has no matches"
+  },
+  "chatHasMatchesNewMatchesText": "New matches",
+  "@chatHasMatchesNewMatchesText": {
+    "description": "Header text displayed on chat screen as section with matches with no messages"
+  },
+  "chatHasMatchesMatchesText": "Messages",
+  "@chatHasMatchesMatchesText": {
+    "description": "Header text displayed on chat screen as section with matches with messages"
+  },
+  "chatMatchesNoMessagesTitleText": "You've matched with - ",
+  "@chatMatchesNoMessagesTitleText": {
+    "description": "Title text displayed when user has no messages with his match"
+  },
+  "chatMatchesNoMessagesBodyText": "Don't be shy start your conversation!",
+  "@chatMatchesNoMessagesBodyText": {
+    "description": "Bodytext displayed when user has no messages with his match"
+  },
+  "chatConversationInputHintText": "Type a message",
+  "@chatConversationInputHintText": {
+    "description": "Hint text displayed inside conversation input textfield"
   }
 }

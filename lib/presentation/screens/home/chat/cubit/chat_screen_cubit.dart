@@ -5,33 +5,44 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tinder/domain/common/failure.dart';
 import 'package:tinder/domain/model/chat/chat.dart';
+import 'package:tinder/domain/repositories/auth_repository.dart';
 import 'package:tinder/domain/repositories/chat_repository.dart';
 
 part 'chat_screen_state.dart';
 
 class ChatScreenCubit extends Cubit<ChatScreenState> {
   final ChatRepository _chatRepository;
-  late final StreamSubscription<QuerySnapshot> _chatListSubscription;
+  final AuthRepository _authRepository;
+  // ignore: cancel_subscriptions
+  StreamSubscription<QuerySnapshot>? _chatListSubscription;
 
-  ChatScreenCubit({required ChatRepository chatRepository})
-      : _chatRepository = chatRepository,
+  ChatScreenCubit({
+    required ChatRepository chatRepository,
+    required AuthRepository authRepository,
+  })  : _chatRepository = chatRepository,
+        _authRepository = authRepository,
         super(ChatLoading());
 
-  Future<void> onScreenOpened(String uid) async => await _startChatsStream(uid);
+  Future<void> onScreenOpened() async => await _startChatsStream();
 
-  Future<void> _startChatsStream(String uid) async => _chatListSubscription =
-      (await _chatRepository.createChatsStream(uid: uid))
-          .listen((snapshot) => _onSnapshot(snapshot));
+  Future<void> _startChatsStream() async => _chatListSubscription == null
+      ? _chatListSubscription = (await _chatRepository.createChatsStream(
+              uid: _authRepository.getCurrentUserUid()))
+          .listen((snapshot) => _onSnapshot(snapshot))
+      : null;
 
-  // FIXME: Remove hardcoded uid
-  void _onSnapshot(QuerySnapshot snapshot) => emit(ChatLoaded(
-        chats: _chatRepository.getChatsFromSnapshot(
-            snapshot, 'hUTjuJwylLWR04yDtpOPnC9JhY53'),
+  Future<void> _onSnapshot(QuerySnapshot snapshot) async => emit(ChatLoaded(
+        chats: await _chatRepository.getChatsFromSnapshot(
+          snapshot,
+          _authRepository.getCurrentUserUid(),
+        ),
       ));
 
   @override
   Future<void> close() {
-    _chatListSubscription.cancel();
+    if (_chatListSubscription != null) {
+      _chatListSubscription!.cancel();
+    }
     return super.close();
   }
 }

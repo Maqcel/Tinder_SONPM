@@ -18,9 +18,15 @@ class MainNavigationHome extends MainNavigationState {
 }
 
 class MainNavigationChatConversation extends MainNavigationState {
+  final Chat chat;
+
   const MainNavigationChatConversation({
+    required this.chat,
     required RouteDefinition previousRoute,
   }) : super(
           previousRoute: previousRoute,
         );
+
+  @override
+  List<Object> get props => [chat];
 }

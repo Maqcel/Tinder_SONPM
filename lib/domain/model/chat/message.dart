@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:tinder/dto/chat/message_response_dto.dart';
 
 class Message extends Equatable {
-  final String id;
+  // Null is set for most recent message
+  final String? id;
   final String messageText;
   final DateTime sentAt;
   final String sentBy;
@@ -15,14 +16,14 @@ class Message extends Equatable {
   });
 
   factory Message.fromDto(MessageResponseDTO dto) => Message(
-        id: dto.id!,
+        id: dto.id,
         messageText: dto.messageText,
         sentAt: dto.sentAt,
         sentBy: dto.sentBy,
       );
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         messageText,
         sentAt,
