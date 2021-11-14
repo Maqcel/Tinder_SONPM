@@ -2,7 +2,7 @@ name: tinder
 description: Mobile application for SONPM lecture
 
 # Prevent accidental publishing to pub.dev.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -12,8 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  #Localizations 
+
+  #Localizations
   flutter_localizations:
     sdk: flutter
   intl: 0.17.0
@@ -28,6 +28,7 @@ dependencies:
 
   #UI
   flutter_chat_ui: 1.5.0
+  flutter_custom_clippers: ^1.1.2
 
   #Utility
   dartz: 0.10.0
@@ -54,7 +55,7 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   #Code gen build runner
   build_runner: 2.1.4
   flutter_gen_runner: 4.0.1
