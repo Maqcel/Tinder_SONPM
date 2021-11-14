@@ -28,7 +28,7 @@ dependencies:
 
   #UI
   flutter_chat_ui: 1.5.0
-  flutter_custom_clippers: ^1.1.2
+  flutter_custom_clippers: ^2.0.0
 
   #Utility
   dartz: 0.10.0

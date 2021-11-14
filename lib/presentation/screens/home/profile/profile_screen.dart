@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
