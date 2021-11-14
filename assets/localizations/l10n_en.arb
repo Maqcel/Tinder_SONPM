@@ -58,5 +58,17 @@
   "chatConversationInputHintText": "Type a message",
   "@chatConversationInputHintText": {
     "description": "Hint text displayed inside conversation input textfield"
+  },
+  "settingsText": "SETTINGS",
+  "@settingsText": {
+    "description": "Text shown under settings button"
+  },
+  "addMediaText": "ADD MEDIA",
+  "@addMediaText": {
+    "description": "Text shown under add media button"
+  },
+  "editText": "EDIT",
+  "@editText": {
+    "description": "Text shown under edit button"
   }
 }
