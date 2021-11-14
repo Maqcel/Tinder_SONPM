@@ -24,7 +24,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget getBody(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    String settingText = context.localizations.settingsText;
     return ClipPath(
       clipper: OvalBottomBorderClipper(),
       child: Container(
@@ -69,40 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: ColorPalette.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorPalette.gray.withOpacity(0.2),
-                              blurRadius: 15,
-                              spreadRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.settings,
-                          size: 35,
-                          color: ColorPalette.gray,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        context.localizations.settingsText,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: ColorPalette.gray,
-                        ),
-                      )
-                    ],
+                  singleButton(
+                    context.localizations.settingsText,
+                    Icons.settings,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -180,40 +148,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: ColorPalette.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorPalette.gray.withOpacity(0.2),
-                              blurRadius: 15,
-                              spreadRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.edit,
-                          size: 35,
-                          color: ColorPalette.gray,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        context.localizations.editText,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: ColorPalette.gray,
-                        ),
-                      )
-                    ],
+                  singleButton(
+                    context.localizations.editText,
+                    Icons.edit,
                   ),
                 ],
               )
@@ -223,4 +160,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
+
+Widget singleButton(String text, IconData icon) {
+  return Column(
+    children: [
+      Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: ColorPalette.white,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: ColorPalette.gray.withOpacity(0.2),
+              blurRadius: 15,
+              spreadRadius: 10,
+            ),
+          ],
+        ),
+        child: Icon(
+          icon,
+          size: 35,
+          color: ColorPalette.gray,
+        ),
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      Text(
+        text,
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: ColorPalette.gray,
+        ),
+      )
+    ],
+  );
 }
