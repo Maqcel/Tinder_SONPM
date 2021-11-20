@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinder/config/dimensions/animation_dimension.dart';
 import 'package:tinder/config/theme/color_palette.dart';
-import 'package:tinder/config/dimensions/padding_dimension.dart';
+import 'package:tinder/domain/model/chat/chat.dart';
+import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
-import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
+import 'package:tinder/presentation/common/screen_failure_handler.dart';
+import 'package:tinder/presentation/screens/home/chat/chat_list_builder.dart';
+import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
+import 'package:tinder/presentation/screens/home/profile/profile_screen_ui.dart';
+import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
+import 'package:tinder/routing/app_routes.dart';
+
+import 'cubit/profile_screen_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,191 +22,73 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with ScreenFailureHandler {
   @override
-  Widget build(BuildContext context) => Scaffold(
+  void initState() {
+    super.initState();
+    context.read<ProfileScreenCubit>().onScreenOpened();
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocListener<MainNavigationCubit, MainNavigationState>(
+        listener: (context, state) => _onMainNavigationStateChanged(state),
+        child: BlocConsumer<ProfileScreenCubit, ProfileScreenState>(
+          buildWhen: (previous, current) => _buildWhen(previous, current),
+          builder: (context, state) => _body(state),
+          listener: (context, state) => _onStateChanged(state),
+        ),
+      );
+
+  void _onMainNavigationStateChanged(MainNavigationState state) {
+    if (state is MainNavigationHome &&
+        state.previousRoute == AppRoutes.chatListConversation) {
+      context.read<ProfileScreenCubit>().onScreenOpened();
+    }
+  }
+
+  bool _buildWhen(
+    ProfileScreenState previous,
+    ProfileScreenState current,
+  ) =>
+      (current is ProfileLoading || current is ProfileLoaded);
+
+  Widget _body(ProfileScreenState state) => Scaffold(
         appBar: AppBar(
           leading: Assets.images.icons.tinderWhite
               .svg(color: ColorPalette.colorPrimary100),
         ),
-        body: getBody(context),
-        backgroundColor: ColorPalette.gray.withOpacity(0.2),
+        body: AnimatedSwitcher(
+          duration: AnimationDimension.durationShort,
+          child: _content(context, state),
+        ),
       );
 
-  Widget getBody(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return ClipPath(
-      clipper: OvalBottomBorderClipper(),
-      child: Container(
-        width: size.width,
-        height: size.height * 0.6,
-        decoration: BoxDecoration(color: ColorPalette.white, boxShadow: [
-          BoxShadow(
-            color: ColorPalette.gray.withOpacity(0.1),
-          ),
-        ]),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: PaddingDimension.large,
-              right: PaddingDimension.large,
-              bottom: PaddingDimension.large),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 140,
-                height: 140,
-                margin: const EdgeInsets.only(
-                  bottom: PaddingDimension.medium,
-                ),
-                child: ClipRRect(
-                  child: SavedStateNetworkImage(
-                    url:
-                        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/david-dobrik-attends-build-brunch-to-discuss-his-recent-and-news-photo-1616503401.?crop=1xw:0.66667xh;center,top&resize=640:*",
-                    fit: BoxFit.fitHeight,
-                    placeholder: (_, __) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                  borderRadius: BorderRadius.circular(90),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: PaddingDimension.medium,
-                ),
-                child: Text(
-                  'David, 22',
-                  style: context.theme.textTheme.headline2,
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _singleButton(
-                    context,
-                    context.localizations.settingsText,
-                    Icons.settings,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: PaddingDimension.medium,
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 85,
-                          height: 85,
-                          margin: const EdgeInsets.only(
-                            bottom: PaddingDimension.small,
-                          ),
-                          child: Stack(
-                            children: [
-                              Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      ColorPalette.colorPrimaryBase,
-                                      ColorPalette.colorPrimary200,
-                                    ],
-                                  ),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorPalette.gray.withOpacity(0.2),
-                                      blurRadius: 15,
-                                      spreadRadius: 10,
-                                    ),
-                                  ],
-                                ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  size: 45,
-                                  color: ColorPalette.white,
-                                ),
-                              ),
-                              Positioned(
-                                right: 0,
-                                bottom: 8,
-                                child: Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    color: ColorPalette.white,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            ColorPalette.gray.withOpacity(0.2),
-                                        blurRadius: 15,
-                                        spreadRadius: 10,
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: ColorPalette.colorPrimaryBase,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          context.localizations.addMediaText,
-                          style: context.theme.textTheme.bodyText1,
-                        )
-                      ],
-                    ),
-                  ),
-                  _singleButton(
-                    context,
-                    context.localizations.editText,
-                    Icons.edit,
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+  Widget _content(BuildContext context, ProfileScreenState state) {
+    if (state is ProfileLoaded) {
+      return GestureDetector(
+        child: _profileUI(state.profile),
+        onTap: () => toSettings(),
+      );
+    } else {
+      return _loadingIndicator(context);
+    }
   }
-}
 
-Widget _singleButton(BuildContext context, String text, IconData icon) {
-  return Column(
-    children: [
-      Container(
-        width: 60,
-        height: 60,
-        margin: const EdgeInsets.only(
-          bottom: PaddingDimension.small,
+  Widget _profileUI(UserProfile profile) => ProfileScreenUi(profile);
+
+  void toSettings() => context.read<MainNavigationCubit>().profileToSettings();
+
+  Widget _loadingIndicator(BuildContext context) => Center(
+        child: CircularProgressIndicator(
+          color: context.theme.colorScheme.secondary,
         ),
-        decoration: BoxDecoration(
-          color: ColorPalette.white,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: ColorPalette.gray.withOpacity(0.2),
-              blurRadius: 15,
-              spreadRadius: 10,
-            ),
-          ],
-        ),
-        child: Icon(
-          icon,
-          size: 35,
-          color: ColorPalette.gray,
-        ),
-      ),
-      Text(
-        text,
-        style: context.theme.textTheme.bodyText1,
-      )
-    ],
-  );
+      );
+
+  void _onStateChanged(ProfileScreenState state) {
+    if (state is ProfileLoadError) {
+      handleFailureInUi(context: context, failure: state.failure);
+    }
+  }
 }
