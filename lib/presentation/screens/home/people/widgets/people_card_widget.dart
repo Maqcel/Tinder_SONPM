@@ -7,14 +7,14 @@ import 'package:tinder/presentation/screens/home/people/swiping_direction.dart';
 
 class PeopleCardWidget extends StatelessWidget {
   final SwipingDirection _swipingDirection;
-  final Match _match;
+  // final Match _match;
 
   const PeopleCardWidget({
     Key? key,
     required SwipingDirection swipingDirection,
-    required Match match,
+    // required Match match,
   })  : _swipingDirection = swipingDirection,
-        _match = match,
+        // _match = match,
         super(key: key);
 
   @override
@@ -23,7 +23,8 @@ class PeopleCardWidget extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.95,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(_match.photoUrl),
+            // image: NetworkImage(_match.photoUrl),
+            image: NetworkImage("https://i.picsum.photos/id/141/200/300.jpg?hmac=d8Mh3TnTbeViVLDauKiTRsNX8KAY5RGDbXDwEuecPko"),
             fit: BoxFit.cover,
           ),
         ),
@@ -73,9 +74,7 @@ class PeopleCardWidget extends StatelessWidget {
               border: Border.all(color: color, width: 2),
             ),
             child: Text(
-              isSwipingRight
-                  ? context.localizations.peopleScreenSwipeLikeActionBadgeText
-                  : context.localizations.peopleScreenSwipeNopeActionBadgeText,
+              "test",
               style: context.theme.textTheme.headline2?.copyWith(color: color),
             ),
           ),

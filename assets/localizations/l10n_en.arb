@@ -69,8 +69,8 @@
   },
   "editText": "EDIT",
   "@editText": {
-    "description": "Text shown under edit button"
-  "peopleScreenSwipeNopeActionBadgeText": "NOPE",
+    "description": "Text shown under edit button",
+  "peopleScreenSwipeNopeActionBadgeText": "NOPE"
   },
   "@peopleScreenSwipeNopeActionBadgeText": {
     "description": "Badge text shown if user doesn't like seen person"

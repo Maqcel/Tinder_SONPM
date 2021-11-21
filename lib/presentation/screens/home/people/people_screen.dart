@@ -6,6 +6,8 @@ import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation_cubit.dart';
 import 'package:tinder/presentation/common/screen_failure_handler.dart';
+import 'package:tinder/presentation/screens/home/people/swiping_direction.dart';
+import 'package:tinder/presentation/screens/home/people/widgets/people_card_widget.dart';
 
 class PeopleScreen extends StatefulWidget {
   const PeopleScreen({Key? key}) : super(key: key);
@@ -27,14 +29,14 @@ class _PeopleScreenState extends State<PeopleScreen> with ScreenFailureHandler {
             leading:
                 Assets.images.icons.tinderWhite.svg(color: Colors.pink[600]),
           ),
-          body: Center(child: Text(context.localizations.homeText)),
+           body: const PeopleCardWidget(swipingDirection: SwipingDirection.right,),
           backgroundColor: Colors.blue,
         ),
       );
 
   // FIXME: Remove this just temporary demo
   Future<void> _testLogOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    context.read<UserSessionNavigationCubit>().onUserSessionStateChanged();
+    // await FirebaseAuth.instance.signOut();
+    // context.read<UserSessionNavigationCubit>().onUserSessionStateChanged();
   }
 }
