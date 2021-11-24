@@ -46,6 +46,13 @@ class MainRouter
       ));
     }
 
+    if (state is MainNavigationSettings) {
+      pageStack.add(SlideTransitionPage.fromRoute(
+        route: AppRoutes.profileSettings,
+        child: const Scaffold(backgroundColor: Colors.yellow),
+      ));
+    }
+
     return pageStack;
   }
 }

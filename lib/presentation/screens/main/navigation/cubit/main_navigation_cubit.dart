@@ -25,6 +25,8 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
     super.onRoutePop(routeName);
     if (routeName == AppRoutes.chatListConversation.name) {
       _onChatConversationPop();
+    } else if (routeName == AppRoutes.profileSettings.name) {
+      _onSettingsPop();
     }
     // if (routeName == AppRoutes.someRoute.name) {
     //   _onSomePop();
@@ -44,6 +46,14 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
   void chatListToConversation(Chat chat) => emit(MainNavigationChatConversation(
         chat: chat,
         previousRoute: AppRoutes.chatList,
+      ));
+
+  void _onSettingsPop() => emit(MainNavigationHome(
+        previousRoute: AppRoutes.profileSettings,
+      ));
+
+  void profileToSettings() => emit(MainNavigationSettings(
+        previousRoute: AppRoutes.homeProfile,
       ));
 
   // void _onSomePop() => emit(MainNavigationHome(
