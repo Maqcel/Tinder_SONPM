@@ -30,3 +30,11 @@ class MainNavigationChatConversation extends MainNavigationState {
   @override
   List<Object> get props => [chat];
 }
+
+class MainNavigationSettings extends MainNavigationState {
+  const MainNavigationSettings({
+    required RouteDefinition previousRoute,
+  }) : super(
+          previousRoute: previousRoute,
+        );
+}
