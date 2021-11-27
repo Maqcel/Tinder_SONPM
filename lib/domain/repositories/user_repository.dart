@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tinder/config/paths.dart';
 import 'package:tinder/domain/common/failure.dart';
 import 'package:tinder/domain/common/generic_call.dart';
 import 'package:tinder/domain/failures/authorization_failure.dart';
+import 'package:tinder/domain/model/possible_match/possible_match.dart';
+import 'package:tinder/dto/possible_matches/possible_matches_resposnse_dto.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<Either<Failure, UserCredential>> login({
     required String email,
     required String password,
@@ -64,4 +68,13 @@ class UserRepository {
   }
 
   Future<void> logout() async => await _firebaseAuth.signOut();
+
+
+  Future<PossibleMatch> getUserProfile(String uid) async {
+    DocumentSnapshot data =
+    await _firestore.collection(Paths.usersPath).doc(uid).get();
+    return PossibleMatch.fromDto(
+        PossibleMatchesResponseDTO.fromJson(data.data() as Map<String, dynamic>));
+  }
+
 }

@@ -21,6 +21,8 @@ class LoginScreenCubit extends Cubit<LoginScreenState> {
       email: email,
       password: password,
     );
+    print({email,password});
+    print(result);
 
     result.fold(
       (error) => emit(LoginError(
