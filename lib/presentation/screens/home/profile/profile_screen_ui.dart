@@ -9,7 +9,11 @@ import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 
 class ProfileScreenUi extends StatelessWidget {
   final UserProfile _profile;
-  const ProfileScreenUi(UserProfile profile) : _profile = profile;
+  final void Function() _toSettings;
+
+  const ProfileScreenUi(UserProfile profile, void Function() toSettings)
+      : _profile = profile,
+        _toSettings = toSettings;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -70,10 +74,13 @@ class ProfileScreenUi extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _singleButton(
-                    context,
-                    context.localizations.settingsText,
-                    Icons.settings,
+                  GestureDetector(
+                    child: _singleButton(
+                      context,
+                      context.localizations.settingsText,
+                      Icons.settings,
+                    ),
+                    onTap: () => _toSettings(),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
