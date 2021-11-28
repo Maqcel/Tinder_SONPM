@@ -70,5 +70,12 @@
   "editText": "EDIT",
   "@editText": {
     "description": "Text shown under edit button"
+  },
+  "possibleMatchesLikedTab": "{count} Likes",
+  "@possibleMatchesLikedTab": {
+    "description": "Liked tab text",
+    "placeholders": {
+      "type": "String"
+    }
   }
 }
