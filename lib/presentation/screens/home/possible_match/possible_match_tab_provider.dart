@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinder/domain/model/possible_match/possible_match.dart';
 import 'package:tinder/presentation/common/tabs/tab_definition.dart';
 import 'package:tinder/presentation/common/tabs/tab_provider.dart';
 import 'package:tinder/presentation/screens/home/possible_match/likes/likes_screen.dart';
@@ -6,6 +7,11 @@ import 'package:tinder/presentation/screens/home/possible_match/possible_match_t
 import 'package:tinder/presentation/screens/home/possible_match/top_picks/top_picks_screen.dart';
 
 class PossibleMatchTabProvider extends TabProvider<PossibleMatchesTabTypes> {
+  final List<PossibleMatch> possibleMatches;
+  final List<PossibleMatch> topPicks;
+
+  PossibleMatchTabProvider(this.possibleMatches, this.topPicks);
+
   @override
   int get count => 2;
 
@@ -26,7 +32,7 @@ class PossibleMatchTabProvider extends TabProvider<PossibleMatchesTabTypes> {
     switch (type) {
       case PossibleMatchesTabTypes.likes:
         return const Tab(
-           text: "Likes",
+           text: " Likes",
         );
       case PossibleMatchesTabTypes.topPicks:
         return const Tab(
@@ -43,11 +49,12 @@ class PossibleMatchTabProvider extends TabProvider<PossibleMatchesTabTypes> {
 
   @override
   Widget getTabBarViewItem(BuildContext context, PossibleMatchesTabTypes type) {
+    // TODO: add strings to localizations
     switch (type) {
       case PossibleMatchesTabTypes.likes:
-        return const LikesScreen();
+        return LikesScreen(descriptionTextPartOne: "Upgrade to Gold to see people", descriptionTextPartTwo: "who already liked you", screenType: "likes",matchList: possibleMatches);
       case PossibleMatchesTabTypes.topPicks:
-        return const TopPicksScreen();
+        return LikesScreen(descriptionTextPartOne: "Upgrade to Tinder Gold for", descriptionTextPartTwo: "more Top Picks!",screenType: "picks",matchList: topPicks);
     }
   }
 }

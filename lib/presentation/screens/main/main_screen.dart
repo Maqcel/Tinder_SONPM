@@ -5,6 +5,7 @@ import 'package:tinder/domain/repositories/chat_repository.dart';
 import 'package:tinder/domain/repositories/user_repository.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
+import 'package:tinder/presentation/screens/home/possible_match/cubit/possible_match_cubit.dart';
 import 'package:tinder/presentation/screens/home/profile/cubit/profile_screen_cubit.dart';
 import 'package:tinder/presentation/screens/main/navigation/main_router.dart';
 
@@ -46,14 +47,20 @@ class _MainScreenState extends State<MainScreen> {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
+          BlocProvider<PossibleMatchScreenCubit>(
+            create: (context) => PossibleMatchScreenCubit(
+              userRepository: context.read<UserRepository>(),
+              authRepository: context.read<AuthRepository>(),
+            ),
+          )
         ],
         child: Router(
           routerDelegate: _routerDelegate,
           backButtonDispatcher: _backButtonDispatcher,
         ),
       );
-  // MultiBlocProvider(
-  //       providers: const [
+// MultiBlocProvider(
+//       providers: const [
   /// For Each screen you should add cubit to manage it state internally
   /// But at first you need to initialize it here
   /// The case is to initialize cubit of the child in the parent navigator
@@ -69,10 +76,10 @@ class _MainScreenState extends State<MainScreen> {
   ///   lazy: true,
   ///   create: (context) => ProfileScreenCubit(),
   /// ),
-  //       ],
-  //       child: Router(
-  //         routerDelegate: _routerDelegate,
-  //         backButtonDispatcher: _backButtonDispatcher,
-  //       ),
-  //     );
+//       ],
+//       child: Router(
+//         routerDelegate: _routerDelegate,
+//         backButtonDispatcher: _backButtonDispatcher,
+//       ),
+//     );
 }
