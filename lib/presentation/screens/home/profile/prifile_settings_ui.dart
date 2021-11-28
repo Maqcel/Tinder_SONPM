@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tinder/config/dimensions/padding_dimension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
+import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation_cubit.dart';
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         leading: Assets.images.icons.tinderWhite
             .svg(color: ColorPalette.colorPrimary100),
         title: Align(
-          child: Text("Ustawienia", style: context.theme.textTheme.headline2),
+          child: Text("Settings", style: context.theme.textTheme.headline2),
           alignment: Alignment.centerLeft,
         ),
       ),
@@ -45,7 +46,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Text(
-                        "Ustawienia konta",
+                        "Account settings",
                         style: context.theme.textTheme.headline3,
                       ),
                     ),
@@ -57,7 +58,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Numer telefonu",
+                          "Phone number",
                           style: context.theme.textTheme.headline3,
                         ),
                         Text(
@@ -76,7 +77,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Text(
-                        "Ustawienia odkrywania",
+                        "Discovery settings",
                         style: context.theme.textTheme.headline3,
                       ),
                     ),
@@ -91,7 +92,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Cały świat",
+                          "Entire world",
                           style: context.theme.textTheme.headline3,
                         ),
                         Switch(
@@ -117,11 +118,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Lokalizacja",
+                          "Location",
                           style: context.theme.textTheme.headline3,
                         ),
                         Text(
-                          "Moja bieżąca lokalizacja",
+                          "My actual location",
                           style: context.theme.textTheme.headline3!
                               .copyWith(color: ColorPalette.blue),
                         ),
@@ -140,12 +141,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Pokaż mi",
+                          "Show me: ",
                           style: context.theme.textTheme.headline3!
                               .copyWith(color: ColorPalette.colorPrimaryBase),
                         ),
                         Text(
-                          "Kobiety",
+                          "Women",
                           style: context.theme.textTheme.headline3,
                         ),
                       ],
@@ -163,7 +164,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       children: [
                         Align(
                           child: Text(
-                            "Maksymalna odległość: ",
+                            "Maximum distance: ",
                             style: context.theme.textTheme.headline2!
                                 .copyWith(color: ColorPalette.colorPrimaryBase),
                           ),
@@ -206,7 +207,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       children: [
                         Align(
                           child: Text(
-                            "Zakres wieku: ",
+                            "Age range: ",
                             style: context.theme.textTheme.headline2!
                                 .copyWith(color: ColorPalette.colorPrimaryBase),
                           ),
@@ -245,6 +246,26 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
                   ),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(top: 10),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: ElevatedButton(
+                        onPressed: () => _logOut(context),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Logout",
+                            style: context.theme.textTheme.headline2,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                        )),
+                  )
                 ],
               ),
             )
@@ -252,6 +273,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         ),
       ),
     );
+  }
+
+  Future<void> _logOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    context.read<UserSessionNavigationCubit>().onUserSessionStateChanged();
   }
 }
 
