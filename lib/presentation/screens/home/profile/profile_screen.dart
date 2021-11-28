@@ -67,16 +67,14 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Widget _content(BuildContext context, ProfileScreenState state) {
     if (state is ProfileLoaded) {
-      return GestureDetector(
-        child: _profileUI(state.profile),
-        onTap: () => toSettings(),
-      );
+      return _profileUI(state.profile);
     } else {
       return _loadingIndicator(context);
     }
   }
 
-  Widget _profileUI(UserProfile profile) => ProfileScreenUi(profile);
+  Widget _profileUI(UserProfile profile) =>
+      ProfileScreenUi(profile, () => toSettings());
 
   void toSettings() => context.read<MainNavigationCubit>().profileToSettings();
 

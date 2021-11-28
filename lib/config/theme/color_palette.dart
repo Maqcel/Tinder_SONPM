@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ColorPalette {
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color grayLightest = Color(0xFFD9D9D9);
   static const Color grayLight = Color(0xFFA6A6A6);
   static const Color grayMid = Color(0xFF6E6E6E);
   static const Color gray = Color(0xFF404040);
