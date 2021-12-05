@@ -1,7 +1,7 @@
 {
-  "loginText": "Login Screen\nTap to log in",
-  "@loginText": {
-    "description": "Text shown on login screen"
+  "tinderLogoText": "tinder",
+  "@tinderLogoText": {
+    "description": "Tinder logo"
   },
   "homeText": "Home Screen\nTap to log out\nAuto Login works",
   "@homeText": {
@@ -70,5 +70,51 @@
   "editText": "VIEW",
   "@editText": {
     "description": "Text shown under view button"
+  },
+  "possibleMatchesLikedTab": "{count} Likes",
+  "@possibleMatchesLikedTab": {
+    "description": "Liked tab text",
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "7"
+      }
+    }
+  },
+  "signinButtonLoginText": "Login",
+  "@signinButtonLoginText": {
+    "description": "Text displayed on Login button"
+  },
+  "signinInputEmailLabel": "Email",
+  "@signinInputEmailLabel": {
+    "description": "Label above email input field"
+  },
+  "signinInputEmailHint": "Enter your email",
+  "@signinInputEmailHint": {
+    "description": "Hint displayed when email input field is empty"
+  },
+  "signinInputPasswordLabel": "Password",
+  "@signinInputPasswordLabel": {
+    "description": "Label above password input field"
+  },
+  "signinInputPasswordHint": "Enter your password",
+  "@signinInputPasswordHint": {
+    "description": "Hint displayed when password input field is empty"
+  },
+  "errorMessageUnexpected": "An unexpected error has occurred",
+  "@errorMessageUnexpected": {
+    "description": "Error message used as a fallback in case of error that doesn't have any description or identifier"
+  },
+  "signinScreenChangeButton": "Signup instead",
+  "@signinScreenChangeButton":{
+    "description":  "Change to signup screen"
+  },
+  "signupButtonSignupText": "Signup",
+  "@signupButtonSignupText": {
+    "description": "Text displayed on signup button"
+  },
+  "signupScreenChangeButton": "Login instead",
+  "@signupScreenChangeButton":{
+    "description":  "Change to login screen"
   }
 }
