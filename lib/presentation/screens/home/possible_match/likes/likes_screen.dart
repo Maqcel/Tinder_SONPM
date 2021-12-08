@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinder/domain/model/possible_match/possible_match.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
+import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 
 class LikesScreen extends StatefulWidget {
   final String descriptionTextPartOne;
@@ -28,8 +29,6 @@ class _LikesScreenState extends State<LikesScreen> {
         backgroundColor: Colors.white70,
       );
 
-
-
   Widget _body() => GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
@@ -39,27 +38,21 @@ class _LikesScreenState extends State<LikesScreen> {
       itemCount: widget.matchList.length,
       itemBuilder: (context, index) => _matchTile(widget.matchList[index]));
 
-  Widget _descriptionFirstLine() => Container(
-        // TODO: why I can't access variables from `LikesScreen`
-        child: Text("Upgrade to Gold to see people",
-            style: TextStyle(color: Colors.black)),
-        padding: EdgeInsets.only(top: 20),
-      );
-
-  Widget _descriptionSecondLine() => Text(
-        "who already liked you",
-        style: TextStyle(color: Colors.black),
-      );
-
-  Widget _textCard() => Card();
 
   Widget _matchTile(PossibleMatch match) => GestureDetector(
           child: Card(
               child: Stack(
         alignment: Alignment.bottomLeft,
         children: [
-          Image.network(match.photoUrl),
-          Text(match.name + ',' + match.birth_date.toString()),
+          SavedStateNetworkImage(
+            url: match.photoUrl,
+            fit: BoxFit.fill,
+            placeholder: (_, __) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          Text(match.name + ',' + (DateTime.now().year - match.birth_date.year)
+              .toString(), style: const TextStyle(color: Colors.black, fontSize: 20),),
         ],
       )));
 }
