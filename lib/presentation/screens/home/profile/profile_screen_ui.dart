@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/config/dimensions/padding_dimension.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
@@ -10,16 +15,37 @@ import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 class ProfileScreenUi extends StatelessWidget {
   final UserProfile _profile;
   final void Function() _toSettings;
+  final void Function() _refreshProfileScreen;
 
-  const ProfileScreenUi(UserProfile profile, void Function() toSettings)
+  Future<void> uploadProfilePicture() async {
+    ImagePicker imagePicker = ImagePicker();
+
+    XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+    File selectedImage = File(image!.path);
+
+    Reference ref = FirebaseStorage.instance.ref().child(_profile.uid);
+    await ref.putFile(selectedImage);
+
+    String url = await ref.getDownloadURL();
+
+    DocumentReference userReference =
+    FirebaseFirestore.instance.collection('users').doc(_profile.uid);
+
+    await userReference.update({
+      'profile_photo_path': url,
+    });
+  }
+
+  const ProfileScreenUi(UserProfile profile, void Function() toSettings, void Function() refreshProfileScreen)
       : _profile = profile,
-        _toSettings = toSettings;
+        _toSettings = toSettings,
+        _refreshProfileScreen = refreshProfileScreen;
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: getBody(context),
-        backgroundColor: ColorPalette.gray.withOpacity(0.2),
-      );
+    body: getBody(context),
+    backgroundColor: ColorPalette.gray.withOpacity(0.2),
+  );
 
   Widget getBody(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -115,10 +141,13 @@ class ProfileScreenUi extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  size: 45,
-                                  color: ColorPalette.white,
+                                child: IconButton(
+                                  icon: const Icon(Icons.camera_alt),
+                                  highlightColor: ColorPalette.white,
+                                  onPressed: () async {
+                                    await uploadProfilePicture();
+                                    _refreshProfileScreen();
+                                  },
                                 ),
                               ),
                               Positioned(
@@ -133,7 +162,7 @@ class ProfileScreenUi extends StatelessWidget {
                                     boxShadow: [
                                       BoxShadow(
                                         color:
-                                            ColorPalette.gray.withOpacity(0.2),
+                                        ColorPalette.gray.withOpacity(0.2),
                                         blurRadius: 15,
                                         spreadRadius: 10,
                                       ),

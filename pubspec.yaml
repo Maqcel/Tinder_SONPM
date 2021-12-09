@@ -42,12 +42,16 @@ dependencies:
   firebase_crashlytics: ^2.2.1
   firebase_analytics: ^8.3.2
   firebase_performance: ^0.7.1+1
+  firebase_storage: ^10.2.0
 
   #Serialization
   json_annotation: 4.3.0
 
   #Networking
   cached_network_image: 3.1.0
+
+  #Image picker
+  image_picker: ^0.8.4+4
 
 dependency_overrides:
   analyzer: 2.6.0

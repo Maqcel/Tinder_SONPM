@@ -74,9 +74,10 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Widget _profileUI(UserProfile profile) =>
-      ProfileScreenUi(profile, () => toSettings());
+      ProfileScreenUi(profile, toSettings, refreshProfileScreen);
 
   void toSettings() => context.read<MainNavigationCubit>().profileToSettings();
+  void refreshProfileScreen() => context.read<ProfileScreenCubit>().onScreenOpened();
 
   Widget _loadingIndicator(BuildContext context) => Center(
         child: CircularProgressIndicator(
