@@ -4,6 +4,7 @@ import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation
 import 'package:tinder/presentation/screens/auth/navigation/cubit/auth_navigation_cubit.dart';
 import 'package:tinder/presentation/screens/home/navigation/cubit/home_navigation_cubit.dart';
 import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
+import 'package:tinder/presentation/screens/onboarding/cubit/onboarding_screen_cubit.dart';
 
 class AppBlocProviders {
   List<BlocProvider> get providers => [
@@ -12,6 +13,10 @@ class AppBlocProviders {
           create: (context) => UserSessionNavigationCubit(
             authRepository: context.read<AuthRepository>(),
           ),
+        ),
+        BlocProvider<OnboardingScreenCubit>(
+          lazy: false,
+          create: (context) => OnboardingScreenCubit(),
         ),
         BlocProvider<AuthNavigationCubit>(
           lazy: true,

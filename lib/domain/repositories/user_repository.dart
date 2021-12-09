@@ -54,11 +54,12 @@ class UserRepository {
     await userReference.set({
       'uid': user.uid,
       'name': null,
-      'phone_number': null,
+      'phone_number': '777888999',
       'gender': null,
       'bio': null,
       'birth_date': null,
-      'profile_photo_path': null,
+      'profile_photo_path':
+          'https://firebasestorage.googleapis.com/v0/b/tinder-c04f7.appspot.com/o/temporary_user.jpeg?alt=media&token=5a4c7934-be63-49ec-80de-71ba65383343',
       'location': {
         'lat': null,
         'lon': null,
@@ -103,8 +104,6 @@ class UserRepository {
     List<String> filteredPossibleMatchesUid =
         possibleMatchesUid.where((match) => match != "").toList();
 
-
-
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> usersData =
         (await _firestore
                 .collection(Paths.usersPath)
@@ -123,36 +122,36 @@ class UserRepository {
   Future<List<PossibleMatch>> getTopPicks(String uid) async {
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> userUid =
         (await _firestore
-            .collection(Paths.possibleMatchesPath)
-            .snapshots()
-            .first)
+                .collection(Paths.possibleMatchesPath)
+                .snapshots()
+                .first)
             .docs;
 
     List<String> possibleMatchesUid = userUid
         .map((document) => ((document.data()['user1'] != uid &&
-        document.data()['user2'] != uid)
-        ? ""
-        : document.data()['user1'] != uid
-        ? document.data()['user1']
-        : document.data()['user2']) as String)
+                document.data()['user2'] != uid)
+            ? ""
+            : document.data()['user1'] != uid
+                ? document.data()['user1']
+                : document.data()['user2']) as String)
         .toList();
     List<String> filteredPossibleMatchesUid =
-    possibleMatchesUid.where((match) => match != "").toList();
+        possibleMatchesUid.where((match) => match != "").toList();
 
     filteredPossibleMatchesUid.add(uid);
 
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> usersData =
         (await _firestore
-            .collection("users")
-            .where(FieldPath.documentId,
-            whereNotIn: filteredPossibleMatchesUid)
-            .snapshots()
-            .first)
+                .collection("users")
+                .where(FieldPath.documentId,
+                    whereNotIn: filteredPossibleMatchesUid)
+                .snapshots()
+                .first)
             .docs;
 
     return usersData
         .map((document) => PossibleMatch.fromDto(
-        PossibleMatchesResponseDTO.fromJson(document.data())))
+            PossibleMatchesResponseDTO.fromJson(document.data())))
         .toList();
   }
 
