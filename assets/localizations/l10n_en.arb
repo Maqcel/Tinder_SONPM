@@ -67,15 +67,8 @@
   "@addMediaText": {
     "description": "Text shown under add media button"
   },
-  "editText": "EDIT",
+  "editText": "VIEW",
   "@editText": {
-    "description": "Text shown under edit button"
-  },
-  "possibleMatchesLikedTab": "{count} Likes",
-  "@possibleMatchesLikedTab": {
-    "description": "Liked tab text",
-    "placeholders": {
-      "type": "String"
-    }
+    "description": "Text shown under view button"
   }
 }

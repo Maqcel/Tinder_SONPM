@@ -6,12 +6,14 @@ class UserProfile extends Equatable {
   final String name;
   final String photoUrl;
   final DateTime birthDate;
+  final String bio;
 
   const UserProfile({
     required this.uid,
     required this.name,
     required this.photoUrl,
     required this.birthDate,
+    required this.bio,
   });
 
   factory UserProfile.fromDto(UserProfileDTO dto) => UserProfile(
@@ -19,6 +21,7 @@ class UserProfile extends Equatable {
         name: dto.name,
         photoUrl: dto.photoUrl,
         birthDate: dto.birth_date,
+        bio: dto.bio,
       );
 
   @override

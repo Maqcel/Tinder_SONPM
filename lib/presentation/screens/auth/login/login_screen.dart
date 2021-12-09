@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
 
   // FIXME: Temporary method
   void _onLoginButtonClicked() {
-    String email = 'user1@test.com';
+    String email = 'user0@test.com';
     String password = 'qwerty123';
     context.focusScope.unfocus();
     context.read<LoginScreenCubit>().onLoginButtonClicked(email, password);
