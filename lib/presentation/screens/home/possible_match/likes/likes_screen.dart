@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tinder/domain/model/possible_match/possible_match.dart';
-import 'package:tinder/extensions/build_context_extension.dart';
-import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 
 class LikesScreen extends StatefulWidget {
@@ -23,6 +21,7 @@ class LikesScreen extends StatefulWidget {
 }
 
 class _LikesScreenState extends State<LikesScreen> {
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: _body(),
@@ -31,10 +30,10 @@ class _LikesScreenState extends State<LikesScreen> {
 
   Widget _body() => GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20),
+          maxCrossAxisExtent: 175,
+          childAspectRatio: 1 / 1,
+          crossAxisSpacing: 40,
+          mainAxisSpacing: 50),
       itemCount: widget.matchList.length,
       itemBuilder: (context, index) => _matchTile(widget.matchList[index]));
 
@@ -52,7 +51,7 @@ class _LikesScreenState extends State<LikesScreen> {
             ),
           ),
           Text(match.name + ',' + (DateTime.now().year - match.birth_date.year)
-              .toString(), style: const TextStyle(color: Colors.black, fontSize: 20),),
+              .toString(), style: const TextStyle(color: Colors.white, fontSize: 20),),
         ],
-      )));
+      ),));
 }
