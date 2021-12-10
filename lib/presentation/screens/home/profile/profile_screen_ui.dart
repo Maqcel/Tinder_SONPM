@@ -1,19 +1,47 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:tinder/config/theme/color_palette.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tinder/config/dimensions/padding_dimension.dart';
+import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
-import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 
 class ProfileScreenUi extends StatelessWidget {
   final UserProfile _profile;
   final void Function() _toSettings;
+  final void Function() _refreshProfileScreen;
+  final void Function() _toProfile;
 
-  const ProfileScreenUi(UserProfile profile, void Function() toSettings)
+  Future<void> uploadProfilePicture() async {
+    ImagePicker imagePicker = ImagePicker();
+
+    XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+    File selectedImage = File(image!.path);
+
+    Reference ref = FirebaseStorage.instance.ref().child(_profile.uid);
+    await ref.putFile(selectedImage);
+
+    String url = await ref.getDownloadURL();
+
+    DocumentReference userReference =
+        FirebaseFirestore.instance.collection('users').doc(_profile.uid);
+
+    await userReference.update({
+      'profile_photo_path': url,
+    });
+  }
+
+  const ProfileScreenUi(UserProfile profile, void Function() toSettings,
+      void Function() toProfile, void Function() refreshProfileScreen)
       : _profile = profile,
-        _toSettings = toSettings;
+        _toSettings = toSettings,
+        _toProfile = toProfile,
+        _refreshProfileScreen = refreshProfileScreen;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -115,10 +143,13 @@ class ProfileScreenUi extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  size: 45,
-                                  color: ColorPalette.white,
+                                child: IconButton(
+                                  icon: const Icon(Icons.camera_alt),
+                                  highlightColor: ColorPalette.white,
+                                  onPressed: () async {
+                                    await uploadProfilePicture();
+                                    _refreshProfileScreen();
+                                  },
                                 ),
                               ),
                               Positioned(
@@ -155,10 +186,13 @@ class ProfileScreenUi extends StatelessWidget {
                       ],
                     ),
                   ),
-                  _singleButton(
-                    context,
-                    context.localizations.editText,
-                    Icons.edit,
+                  GestureDetector(
+                    child: _singleButton(
+                      context,
+                      context.localizations.editText,
+                      Icons.remove_red_eye,
+                    ),
+                    onTap: () => _toProfile(),
                   ),
                 ],
               )

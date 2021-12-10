@@ -38,3 +38,13 @@ class MainNavigationSettings extends MainNavigationState {
           previousRoute: previousRoute,
         );
 }
+
+class MainNavigationDetails extends MainNavigationState {
+  final UserProfile profile;
+  const MainNavigationDetails({
+    required this.profile,
+    required RouteDefinition previousRoute,
+  }) : super(
+          previousRoute: previousRoute,
+        );
+}

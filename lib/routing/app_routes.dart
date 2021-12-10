@@ -54,4 +54,8 @@ class AppRoutes {
     name: '/home/settings',
     valueKey: ValueKey('settings'),
   );
+  static RouteDefinition profileDetails = const RouteDefinition(
+    name: '/home/details',
+    valueKey: ValueKey('details'),
+  );
 }

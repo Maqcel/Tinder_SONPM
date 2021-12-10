@@ -67,8 +67,8 @@
   "@addMediaText": {
     "description": "Text shown under add media button"
   },
-  "editText": "EDIT",
+  "editText": "VIEW",
   "@editText": {
-    "description": "Text shown under edit button"
+    "description": "Text shown under view button"
   }
 }

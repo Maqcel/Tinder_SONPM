@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:tinder/domain/model/chat/chat.dart';
+import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/presentation/common/navigation/navigation_cubit.dart';
 import 'package:tinder/routing/app_routes.dart';
 import 'package:tinder/routing/route_definition.dart';
@@ -53,6 +54,11 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
       ));
 
   void profileToSettings() => emit(MainNavigationSettings(
+        previousRoute: AppRoutes.homeProfile,
+      ));
+
+  void profileToDetails(UserProfile userProfile) => emit(MainNavigationDetails(
+        profile: userProfile,
         previousRoute: AppRoutes.homeProfile,
       ));
 

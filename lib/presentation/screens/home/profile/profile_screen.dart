@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/config/dimensions/animation_dimension.dart';
 import 'package:tinder/config/theme/color_palette.dart';
-import 'package:tinder/domain/model/chat/chat.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/common/screen_failure_handler.dart';
-import 'package:tinder/presentation/screens/home/chat/chat_list_builder.dart';
-import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
 import 'package:tinder/presentation/screens/home/profile/profile_screen_ui.dart';
 import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
 import 'package:tinder/routing/app_routes.dart';
@@ -73,10 +70,14 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
   }
 
-  Widget _profileUI(UserProfile profile) =>
-      ProfileScreenUi(profile, () => toSettings());
+  Widget _profileUI(UserProfile profile) => ProfileScreenUi(profile,
+      () => toSettings(), () => toProfile(profile), refreshProfileScreen);
 
   void toSettings() => context.read<MainNavigationCubit>().profileToSettings();
+  void toProfile(UserProfile profile) =>
+      context.read<MainNavigationCubit>().profileToDetails(profile);
+  void refreshProfileScreen() =>
+      context.read<ProfileScreenCubit>().onScreenOpened();
 
   Widget _loadingIndicator(BuildContext context) => Center(
         child: CircularProgressIndicator(
