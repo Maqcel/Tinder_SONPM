@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
@@ -14,6 +16,23 @@ class ProfileDetails extends StatefulWidget {
 }
 
 class _ProfileDetailsState extends State<ProfileDetails> {
+  bool editMode = false;
+  final myController = TextEditingController();
+
+  Future<void> _changeBio() async {
+    if (editMode) {
+      // Problemy z cachem
+      DocumentReference userReference = FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.profile.uid);
+      userReference.update({'bio': myController.text});
+    }
+    setState(() {
+      myController.text = widget.profile.bio;
+      editMode = !editMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +69,42 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               style: context.theme.textTheme.headline1,
             ),
           ),
+          editMode
+              ? Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: myController,
+                    maxLines: 3,
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.profile.bio,
+                    style: context.theme.textTheme.headline2,
+                  ),
+                ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              widget.profile.bio,
-              style: context.theme.textTheme.headline2,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: ConstrainedBox(
+                constraints: BoxConstraints.tightFor(width: 80, height: 80),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _changeBio();
+                  },
+                  child: const Text('Edit', style: TextStyle(fontSize: 25)),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9999.0),
+                        side: BorderSide(color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           )
         ],
