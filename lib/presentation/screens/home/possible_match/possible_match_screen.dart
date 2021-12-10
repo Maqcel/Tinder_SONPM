@@ -62,8 +62,6 @@ class _PossibleMatchScreenState extends State<PossibleMatchScreen> with ScreenFa
   Widget _tabs(BuildContext context, PossibleMatchState state) =>
       DefaultTabController(length: tabProvider.count, child: Scaffold(
         appBar: AppBar(
-          leading: Assets.images.icons.tinderWhite
-              .svg(color: ColorPalette.colorPrimary100),
           bottom: TabBar(tabs: tabProvider.getTabBarItems(context),),
         ),
 

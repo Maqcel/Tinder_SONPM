@@ -22,11 +22,10 @@ class PossibleMatchScreenCubit extends Cubit<PossibleMatchState> {
   }
 
   Future<void> _refreshProgram(PossibleMatchPlanLoaded currentState) async {
-    // TODO: change to correct function from userRepository
     List<PossibleMatch> possibleMatches =
         (await _userRepository.getPossibleMatches(_authRepository.getCurrentUserUid()));
     List<PossibleMatch> topPicks =
-        (await _userRepository.getPossibleMatches(_authRepository.getCurrentUserUid()));
+        (await _userRepository.getTopPicks(_authRepository.getCurrentUserUid()));
 
     emit(currentState.copyWith(
       possibleMatches: possibleMatches,
@@ -35,11 +34,10 @@ class PossibleMatchScreenCubit extends Cubit<PossibleMatchState> {
   }
 
   Future<void> _loadMatches() async {
-    // TODO: change to correct function from userRepository
     List<PossibleMatch> possibleMatches =
         (await _userRepository.getPossibleMatches(_authRepository.getCurrentUserUid()));
     List<PossibleMatch> topPicks =
-        (await _userRepository.getPossibleMatches(_authRepository.getCurrentUserUid()));
+        (await _userRepository.getTopPicks(_authRepository.getCurrentUserUid()));
 
     emit(PossibleMatchPlanLoaded(
         possibleMatches: possibleMatches, topPicks: topPicks));
