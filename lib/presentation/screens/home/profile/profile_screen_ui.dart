@@ -5,17 +5,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/config/dimensions/padding_dimension.dart';
+import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
-import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/widget/image/saved_state_cached_image.dart';
 
 class ProfileScreenUi extends StatelessWidget {
   final UserProfile _profile;
   final void Function() _toSettings;
   final void Function() _refreshProfileScreen;
+  final void Function() _toProfile;
 
   Future<void> uploadProfilePicture() async {
     ImagePicker imagePicker = ImagePicker();
@@ -29,23 +29,25 @@ class ProfileScreenUi extends StatelessWidget {
     String url = await ref.getDownloadURL();
 
     DocumentReference userReference =
-    FirebaseFirestore.instance.collection('users').doc(_profile.uid);
+        FirebaseFirestore.instance.collection('users').doc(_profile.uid);
 
     await userReference.update({
       'profile_photo_path': url,
     });
   }
 
-  const ProfileScreenUi(UserProfile profile, void Function() toSettings, void Function() refreshProfileScreen)
+  const ProfileScreenUi(UserProfile profile, void Function() toSettings,
+      void Function() toProfile, void Function() refreshProfileScreen)
       : _profile = profile,
         _toSettings = toSettings,
+        _toProfile = toProfile,
         _refreshProfileScreen = refreshProfileScreen;
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: getBody(context),
-    backgroundColor: ColorPalette.gray.withOpacity(0.2),
-  );
+        body: getBody(context),
+        backgroundColor: ColorPalette.gray.withOpacity(0.2),
+      );
 
   Widget getBody(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -162,7 +164,7 @@ class ProfileScreenUi extends StatelessWidget {
                                     boxShadow: [
                                       BoxShadow(
                                         color:
-                                        ColorPalette.gray.withOpacity(0.2),
+                                            ColorPalette.gray.withOpacity(0.2),
                                         blurRadius: 15,
                                         spreadRadius: 10,
                                       ),
@@ -184,10 +186,13 @@ class ProfileScreenUi extends StatelessWidget {
                       ],
                     ),
                   ),
-                  _singleButton(
-                    context,
-                    context.localizations.editText,
-                    Icons.edit,
+                  GestureDetector(
+                    child: _singleButton(
+                      context,
+                      context.localizations.editText,
+                      Icons.remove_red_eye,
+                    ),
+                    onTap: () => _toProfile(),
                   ),
                 ],
               )

@@ -12,6 +12,9 @@ class UserProfileDTO {
   @JsonKey(name: 'name')
   final String name;
 
+  @JsonKey(name: 'bio')
+  final String bio;
+
   @JsonKey(name: 'profile_photo_path')
   final String photoUrl;
 
@@ -23,6 +26,7 @@ class UserProfileDTO {
     required this.name,
     required this.photoUrl,
     required this.birth_date,
+    required this.bio,
   });
 
   factory UserProfileDTO.fromJson(Map<String, dynamic> json) =>
