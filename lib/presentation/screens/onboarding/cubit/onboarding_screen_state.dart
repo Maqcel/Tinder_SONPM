@@ -15,7 +15,7 @@ class OnboardingInitial extends OnboardingScreenState {
 
 class OnboardingStatus extends OnboardingScreenState {
   final String userName;
-  final DateTime birthDate;
+  final DateTime? birthDate;
   final Gender? gender;
   final List<Passions> passions;
   final String userBio;
@@ -23,7 +23,7 @@ class OnboardingStatus extends OnboardingScreenState {
   const OnboardingStatus({
     required bool onboardingCompleted,
     required this.userName,
-    required this.birthDate,
+    this.birthDate,
     this.gender,
     required this.passions,
     required this.userBio,

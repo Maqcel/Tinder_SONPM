@@ -144,5 +144,17 @@
   "onboardingAppBarTitle": "Finish your account",
   "@onboardingAppBarTitle": {
     "description": "Appbar title text in onboarding"
+  },
+  "onboardingInputHintBio": "Insert your bio",
+  "@onboardingInputHintBio": {
+    "description": "Input field hint in bio section"
+  },
+  "onboardingInputHintName": "Provide us with your name",
+  "@onboardingInputHintName": {
+    "description": "Input field hint in name section"
+  },
+  "onboardingSubmitButtonText": "Submit",
+  "@onboardingSubmitButtonText": {
+    "description": "Button text for submiting onboarding form"
   }
 }

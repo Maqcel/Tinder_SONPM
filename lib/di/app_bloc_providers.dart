@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/domain/repositories/auth_repository.dart';
+import 'package:tinder/domain/repositories/onboarding_repository.dart';
 import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation_cubit.dart';
 import 'package:tinder/presentation/screens/auth/navigation/cubit/auth_navigation_cubit.dart';
 import 'package:tinder/presentation/screens/home/navigation/cubit/home_navigation_cubit.dart';
@@ -15,8 +16,10 @@ class AppBlocProviders {
           ),
         ),
         BlocProvider<OnboardingScreenCubit>(
-          lazy: false,
-          create: (context) => OnboardingScreenCubit(),
+          lazy: true,
+          create: (context) => OnboardingScreenCubit(
+            onboardingRepository: context.read<OnboardingRepository>(),
+          ),
         ),
         BlocProvider<AuthNavigationCubit>(
           lazy: true,

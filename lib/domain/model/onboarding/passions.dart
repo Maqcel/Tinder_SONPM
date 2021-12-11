@@ -12,3 +12,9 @@ enum Passions {
   swimming,
   cooking,
 }
+
+extension ToString on Passions {
+  String toValueString() {
+    return toString().split('.').last;
+  }
+}
