@@ -58,4 +58,8 @@ class AppRoutes {
     name: '/home/details',
     valueKey: ValueKey('details'),
   );
+  static RouteDefinition possibleMatchDetails = const RouteDefinition(
+    name: '/home/possible-match-details',
+    valueKey: ValueKey('details'),
+  );
 }

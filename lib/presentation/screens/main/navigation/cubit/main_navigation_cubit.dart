@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:tinder/domain/model/chat/chat.dart';
+import 'package:tinder/domain/model/possible_match/possible_match.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/presentation/common/navigation/navigation_cubit.dart';
 import 'package:tinder/routing/app_routes.dart';
@@ -61,6 +62,15 @@ class MainNavigationCubit extends NavigationCubit<MainNavigationState> {
         profile: userProfile,
         previousRoute: AppRoutes.homeProfile,
       ));
+
+  void matchProfileDetails(PossibleMatch userProfile) => emit(MainNavigationMatchDetails(
+    profile: userProfile,
+    previousRoute: AppRoutes.homePossibleMatch,
+  ));
+
+  void goBackToPossibleMatches() => emit(MainNavigationPossibleMatchDetails(
+    previousRoute: AppRoutes.homePossibleMatch,
+  ));
 
   // void _onSomePop() => emit(MainNavigationHome(
   //       previousRoute: AppRoutes.someRoute,
