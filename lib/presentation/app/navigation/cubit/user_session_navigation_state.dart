@@ -12,3 +12,5 @@ class UserSessionNavigationInitial extends UserSessionNavigationState {}
 class UserSessionNavigationLoggedIn extends UserSessionNavigationState {}
 
 class UserSessionNavigationLoggedOut extends UserSessionNavigationState {}
+
+class UserSessionNavigationOnboarding extends UserSessionNavigationState {}

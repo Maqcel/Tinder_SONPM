@@ -3,6 +3,7 @@ import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/slide_transition_page.dart';
 import 'package:tinder/presentation/screens/auth/login/login_screen.dart';
 import 'package:tinder/presentation/screens/auth/navigation/cubit/auth_navigation_cubit.dart';
+import 'package:tinder/presentation/screens/auth/signup/signup_screen.dart';
 import 'package:tinder/routing/app_routes.dart';
 
 class AuthRouter
@@ -27,10 +28,9 @@ class AuthRouter
         route: AppRoutes.login,
         child: const LoginScreen(),
       ));
-      //TODO: Implement Signing up
       pageStack.add(SlideTransitionPage.fromRoute(
         route: AppRoutes.signup,
-        child: const Scaffold(backgroundColor: Colors.green),
+        child: const SignupScreen(),
       ));
     }
 

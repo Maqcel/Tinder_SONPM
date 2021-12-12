@@ -4,6 +4,7 @@ import 'package:tinder/domain/repositories/user_repository.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/presentation/screens/auth/login/cubit/login_screen_cubit.dart';
 import 'package:tinder/presentation/screens/auth/navigation/auth_router.dart';
+import 'package:tinder/presentation/screens/auth/signup/cubit/signup_screen_cubit.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -33,6 +34,10 @@ class _AuthScreenState extends State<AuthScreen> {
         providers: [
           BlocProvider(
               create: (context) => LoginScreenCubit(
+                    userRepository: context.read<UserRepository>(),
+                  )),
+          BlocProvider(
+              create: (context) => SignupScreenCubit(
                     userRepository: context.read<UserRepository>(),
                   ))
         ],

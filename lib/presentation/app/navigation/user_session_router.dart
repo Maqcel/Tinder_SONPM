@@ -4,6 +4,7 @@ import 'package:tinder/presentation/common/navigation/cubit_router.dart';
 import 'package:tinder/presentation/page_transitions/slide_transition_page.dart';
 import 'package:tinder/presentation/screens/auth/auth_screen.dart';
 import 'package:tinder/presentation/screens/main/main_screen.dart';
+import 'package:tinder/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:tinder/presentation/screens/splash/splash_screen.dart';
 import 'package:tinder/routing/app_routes.dart';
 
@@ -45,6 +46,16 @@ class UserSessionRouter extends CubitRouter<UserSessionNavigationCubit,
           name: AppRoutes.login.name,
           key: AppRoutes.login.valueKey,
           child: const AuthScreen(),
+        ),
+      );
+    }
+
+    if (state is UserSessionNavigationOnboarding) {
+      pageStack.add(
+        SlideTransitionPage<void>(
+          name: AppRoutes.login.name,
+          key: AppRoutes.login.valueKey,
+          child: const OnboardingScreen(),
         ),
       );
     }

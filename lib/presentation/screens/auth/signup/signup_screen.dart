@@ -2,46 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/config/dimensions/animation_dimension.dart';
 import 'package:tinder/config/dimensions/padding_dimension.dart';
-import 'package:tinder/domain/failures/login_failure.dart';
+import 'package:tinder/domain/failures/signup_failure.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/gen/assets.gen.dart';
 import 'package:tinder/presentation/app/navigation/cubit/user_session_navigation_cubit.dart';
 import 'package:tinder/presentation/common/screen_failure_handler.dart';
-import 'package:tinder/presentation/screens/auth/login/cubit/login_screen_cubit.dart';
-import 'package:tinder/presentation/screens/auth/navigation/cubit/auth_navigation_cubit.dart';
+import 'package:tinder/presentation/screens/auth/signup/cubit/signup_screen_cubit.dart';
 import 'package:tinder/presentation/screens/auth/widgets/email_form_input.dart';
 import 'package:tinder/presentation/screens/auth/widgets/error_container.dart';
 import 'package:tinder/presentation/screens/auth/widgets/password_form_input.dart';
 import 'package:tinder/presentation/widget/button/primary_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
+class _SignupScreenState extends State<SignupScreen> with ScreenFailureHandler {
   final TextEditingController _emailInputController = TextEditingController();
   final TextEditingController _passwordInputController =
       TextEditingController();
   final FocusNode _passwordInputFocusNode =
       FocusNode(debugLabel: 'PasswordInputFocusNode');
-
   @override
   Widget build(BuildContext context) =>
-      BlocConsumer<LoginScreenCubit, LoginScreenState>(
+      BlocConsumer<SignupScreenCubit, SignupScreenState>(
         builder: (context, state) => _body(state),
         listener: (context, state) => _onStateChanged(state),
       );
 
-  Widget _body(LoginScreenState state) => Scaffold(
+  Widget _body(SignupScreenState state) => Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _tinderLogoContainer(),
-            _loginFormContainer(state),
-            _signupScreenChangeButton(),
+            _signupFormContainer(state),
+            _loginScreenChangeButton(),
           ],
         ),
       );
@@ -63,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
         ),
       );
 
-  Widget _loginFormContainer(LoginScreenState state) => Container(
+  Widget _signupFormContainer(SignupScreenState state) => Container(
         color: context.theme.colorScheme.background,
         padding: const EdgeInsets.all(PaddingDimension.medium),
         child: Column(
@@ -77,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
             EmailFormInput(
               controller: _emailInputController,
               onEditingComplete: () => _onEmailInputEditingComplete(),
-              onInputChange: _onLoginDataChanged,
+              onInputChange: _onSignupDataChanged,
             ),
             const SizedBox(
               height: PaddingDimension.medium,
@@ -87,25 +85,25 @@ class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
               hintText: context.localizations.signinInputPasswordHint,
               focusNode: _passwordInputFocusNode,
               controller: _passwordInputController,
-              onInputChange: _onLoginDataChanged,
+              onInputChange: _onSignupDataChanged,
             ),
             const SizedBox(
               height: PaddingDimension.large,
               width: double.infinity,
             ),
-            _loginButtonRow(state.allowLogin)
+            _signupButtonRow(state.allowSignup)
           ],
         ),
       );
 
-  Widget _errorContainer(LoginScreenState state) => AnimatedSize(
+  Widget _errorContainer(SignupScreenState state) => AnimatedSize(
         duration: AnimationDimension.durationMedium,
-        child: (state is LoginError && state.failure is! LoginFailure)
+        child: (state is SignupError && state.failure is! SignupFailure)
             ? _error(state)
             : const SizedBox.shrink(),
       );
 
-  Widget _error(LoginError state) => Column(
+  Widget _error(SignupError state) => Column(
         children: [
           ErrorContainer(
             message: state.failure.message,
@@ -126,12 +124,12 @@ class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
         ],
       );
 
-  Widget _loginButtonRow(bool allowLogin) => Row(
+  Widget _signupButtonRow(bool allowSignup) => Row(
         children: [
           PrimaryButton(
-            text: context.localizations.signinButtonLoginText,
-            isEnabled: allowLogin,
-            onPressed: () => _onLoginButtonClicked(),
+            text: context.localizations.signupButtonSignupText,
+            isEnabled: allowSignup,
+            onPressed: () => _onSignupButtonClicked(),
           )
         ],
       );
@@ -140,28 +138,28 @@ class _LoginScreenState extends State<LoginScreen> with ScreenFailureHandler {
     context.focusScope.requestFocus(_passwordInputFocusNode);
   }
 
-  void _onLoginDataChanged() {
+  void _onSignupDataChanged() {
     String email = _emailInputController.text;
     String password = _passwordInputController.text;
-    context.read<LoginScreenCubit>().onLoginDataChanged(email, password);
+    context.read<SignupScreenCubit>().onSignupDataChanged(email, password);
   }
 
-  void _onLoginButtonClicked() {
+  void _onSignupButtonClicked() {
     String email = _emailInputController.text;
     String password = _passwordInputController.text;
     context.focusScope.unfocus();
-    context.read<LoginScreenCubit>().onLoginButtonClicked(email, password);
+    context.read<SignupScreenCubit>().onSignupButtonClicked(email, password);
   }
 
-  Widget _signupScreenChangeButton() => TextButton(
-        onPressed: () => context.read<AuthNavigationCubit>().loginToSignup(),
-        child: Text(context.localizations.signinScreenChangeButton),
+  Widget _loginScreenChangeButton() => TextButton(
+        onPressed: () => context.navigator.maybePop(),
+        child: Text(context.localizations.signupScreenChangeButton),
       );
 
-  void _onStateChanged(LoginScreenState state) {
-    if (state is LoginSuccess) {
+  void _onStateChanged(SignupScreenState state) {
+    if (state is SignupSuccess) {
       context.read<UserSessionNavigationCubit>().onUserSessionStateChanged();
-    } else if (state is LoginError && state.failure is! LoginFailure) {
+    } else if (state is SignupError) {
       handleFailureInUi(context: context, failure: state.failure);
     }
   }

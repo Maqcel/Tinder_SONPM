@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:tinder/config/paths.dart';
 import 'package:tinder/domain/repositories/auth_repository.dart';
 import 'package:tinder/presentation/common/navigation/navigation_cubit.dart';
 
@@ -20,7 +22,19 @@ class UserSessionNavigationCubit
   @override
   void onRoutePop(String? routeName) {}
 
-  void onUserSessionStateChanged() => _authRepository.hasValidUserSession()
-      ? emit(UserSessionNavigationLoggedIn())
-      : emit(UserSessionNavigationLoggedOut());
+  Future<void> onUserSessionStateChanged() async =>
+      _authRepository.hasValidUserSession()
+          ? await checkUserDataStatus()
+              ? emit(UserSessionNavigationLoggedIn())
+              : emit(UserSessionNavigationOnboarding())
+          : emit(UserSessionNavigationLoggedOut());
+
+  Future<bool> checkUserDataStatus() async => (await FirebaseFirestore.instance
+                  .collection(Paths.usersPath)
+                  .doc(_authRepository.getCurrentUserUid())
+                  .get())
+              .data()!['name'] !=
+          null
+      ? true
+      : false;
 }

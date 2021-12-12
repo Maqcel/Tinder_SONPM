@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tinder/domain/common/failure.dart';
@@ -15,14 +16,17 @@ class LoginScreenCubit extends Cubit<LoginScreenState> {
   })  : _userRepository = userRepository,
         super(const LoginScreenInitial());
 
+  void onLoginDataChanged(String email, String password) =>
+      emit(LoginDataChanged(
+        allowLogin: EmailValidator.validate(email) && password.isNotEmpty,
+      ));
+
   Future<void> onLoginButtonClicked(String email, String password) async {
     emit(const LoginInProgress());
     Either<Failure, UserCredential> result = await _userRepository.login(
       email: email,
       password: password,
     );
-    print({email,password});
-    print(result);
 
     result.fold(
       (error) => emit(LoginError(
