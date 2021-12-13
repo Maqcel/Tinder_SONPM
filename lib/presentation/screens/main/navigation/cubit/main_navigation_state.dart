@@ -39,6 +39,14 @@ class MainNavigationSettings extends MainNavigationState {
         );
 }
 
+class MainNavigationPossibleMatchDetails extends MainNavigationState {
+  const MainNavigationPossibleMatchDetails({
+    required RouteDefinition previousRoute,
+  }) : super(
+    previousRoute: previousRoute,
+  );
+}
+
 class MainNavigationDetails extends MainNavigationState {
   final UserProfile profile;
   const MainNavigationDetails({
@@ -47,4 +55,14 @@ class MainNavigationDetails extends MainNavigationState {
   }) : super(
           previousRoute: previousRoute,
         );
+}
+
+class MainNavigationMatchDetails extends MainNavigationState {
+  final PossibleMatch profile;
+  const MainNavigationMatchDetails({
+    required this.profile,
+    required RouteDefinition previousRoute,
+  }) : super(
+    previousRoute: previousRoute,
+  );
 }

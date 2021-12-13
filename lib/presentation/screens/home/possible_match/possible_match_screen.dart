@@ -25,8 +25,6 @@ class _PossibleMatchScreenState extends State<PossibleMatchScreen> with ScreenFa
     context.read<PossibleMatchScreenCubit>().onScreenOpened();
   }
 
-
-
   @override
   Widget build(BuildContext context) =>
       BlocConsumer<PossibleMatchScreenCubit, PossibleMatchState>(

@@ -7,6 +7,7 @@ import 'package:tinder/presentation/page_transitions/slide_transition_page.dart'
 import 'package:tinder/presentation/screens/home/chat/conversation/conversation_screen.dart';
 import 'package:tinder/presentation/screens/home/chat/conversation/cubit/conversation_screen_cubit.dart';
 import 'package:tinder/presentation/screens/home/home_screen.dart';
+import 'package:tinder/presentation/screens/home/possible_match/possible_match_details.dart';
 import 'package:tinder/presentation/screens/home/profile/pofile_details_ui.dart';
 import 'package:tinder/presentation/screens/home/profile/prifile_settings_ui.dart';
 import 'package:tinder/presentation/screens/main/navigation/cubit/main_navigation_cubit.dart';
@@ -57,6 +58,12 @@ class MainRouter
       pageStack.add(SlideTransitionPage.fromRoute(
           route: AppRoutes.profileSettings,
           child: ProfileDetails(profile: state.profile)));
+    }
+
+    if (state is MainNavigationMatchDetails) {
+      pageStack.add(SlideTransitionPage.fromRoute(
+          route: AppRoutes.homePossibleMatch,
+          child: PossibleMatchDetails(profile: state.profile)));
     }
 
     return pageStack;
