@@ -25,11 +25,15 @@ class ChatScreenCubit extends Cubit<ChatScreenState> {
 
   Future<void> onScreenOpened() async => await _startChatsStream();
 
-  Future<void> _startChatsStream() async => _chatListSubscription == null
-      ? _chatListSubscription = (await _chatRepository.createChatsStream(
-              uid: _authRepository.getCurrentUserUid()))
-          .listen((snapshot) => _onSnapshot(snapshot))
-      : null;
+  Future<void> _startChatsStream() async {
+    _chatListSubscription ??= (await _chatRepository.createChatsStream(
+            uid: _authRepository.getCurrentUserUid()))
+        ?.listen((snapshot) => _onSnapshot(snapshot));
+
+    if (_chatListSubscription == null) {
+      emit(const ChatLoaded(chats: []));
+    }
+  }
 
   Future<void> _onSnapshot(QuerySnapshot snapshot) async => emit(ChatLoaded(
         chats: await _chatRepository.getChatsFromSnapshot(

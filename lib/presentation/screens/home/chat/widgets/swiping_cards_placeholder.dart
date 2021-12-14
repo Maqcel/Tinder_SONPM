@@ -5,7 +5,13 @@ import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 
 class SwipingCardPlaceholder extends StatelessWidget {
-  const SwipingCardPlaceholder({Key? key}) : super(key: key);
+  final bool _isPossibleMatchesScreen;
+
+  const SwipingCardPlaceholder({
+    Key? key,
+    bool? isPossibleMatchesScreen,
+  })  : _isPossibleMatchesScreen = isPossibleMatchesScreen ?? false,
+        super(key: key);
   final Color greyCardColor = const Color.fromRGBO(253, 253, 253, 1.0);
   final Color greenCardColor = const Color.fromRGBO(248, 254, 252, 1.0);
 
@@ -30,7 +36,9 @@ class SwipingCardPlaceholder extends StatelessWidget {
                   horizontal: PaddingDimension.large,
                 ),
                 child: Text(
-                  context.localizations.chatNoMatchesBodyText,
+                  _isPossibleMatchesScreen
+                      ? context.localizations.possibleMatchesNoMatchesBodyText
+                      : context.localizations.chatNoMatchesBodyText,
                   style: context.theme.textTheme.bodyText1?.copyWith(
                     color: ColorPalette.grayLight,
                   ),

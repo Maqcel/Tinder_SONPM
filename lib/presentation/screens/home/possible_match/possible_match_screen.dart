@@ -16,7 +16,8 @@ class PossibleMatchScreen extends StatefulWidget {
   _PossibleMatchScreenState createState() => _PossibleMatchScreenState();
 }
 
-class _PossibleMatchScreenState extends State<PossibleMatchScreen> with ScreenFailureHandler {
+class _PossibleMatchScreenState extends State<PossibleMatchScreen>
+    with ScreenFailureHandler {
   late final PossibleMatchTabProvider tabProvider;
 
   @override
@@ -28,23 +29,20 @@ class _PossibleMatchScreenState extends State<PossibleMatchScreen> with ScreenFa
   @override
   Widget build(BuildContext context) =>
       BlocConsumer<PossibleMatchScreenCubit, PossibleMatchState>(
-          builder: (context, state) => _body(state),
-        listener: (context, state) => _onStateChanged(state),);
+        builder: (context, state) => _body(state),
+        buildWhen: (previous, current) => _buildWhen(previous, current),
+        listener: (context, state) => _onStateChanged(state),
+      );
 
-  Widget _body(PossibleMatchState state) => Scaffold(
-    appBar: AppBar(
-      leading: Assets.images.icons.tinderWhite
-          .svg(color: ColorPalette.colorPrimary100),
-    ),
-    body: AnimatedSwitcher(
-      duration: AnimationDimension.durationShort,
-      child: _content(context, state),
-    ),
-  );
+  Widget _body(PossibleMatchState state) => AnimatedSwitcher(
+        duration: AnimationDimension.durationShort,
+        child: _content(context, state),
+      );
 
   Widget _content(BuildContext context, PossibleMatchState state) {
     if (state is PossibleMatchPlanLoaded) {
-      tabProvider = PossibleMatchTabProvider(state.possibleMatches, state.topPicks);
+      tabProvider =
+          PossibleMatchTabProvider(state.possibleMatches, state.topPicks);
       return _tabs(context, state);
     } else {
       return _loadingIndicator(context);
@@ -52,33 +50,35 @@ class _PossibleMatchScreenState extends State<PossibleMatchScreen> with ScreenFa
   }
 
   bool _buildWhen(
-      PossibleMatchState previous,
-      PossibleMatchState current,
-      ) =>
-      (current is PossibleMatchPlanLoading || current is PossibleMatchPlanLoaded);
+    PossibleMatchState previous,
+    PossibleMatchState current,
+  ) =>
+      (current is PossibleMatchPlanLoading ||
+          current is PossibleMatchPlanLoaded);
 
   Widget _tabs(BuildContext context, PossibleMatchState state) =>
-      DefaultTabController(length: tabProvider.count, child: Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(tabs: tabProvider.getTabBarItems(context),),
-        ),
-
-        body: TabBarView(
-            children: tabProvider.getTabBarViewItems(context)
-        ),
-      ));
+      DefaultTabController(
+          length: tabProvider.count,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: Assets.images.icons.tinderWhite
+                  .svg(color: ColorPalette.colorPrimary100),
+              bottom: TabBar(
+                tabs: tabProvider.getTabBarItems(context),
+              ),
+            ),
+            body: TabBarView(children: tabProvider.getTabBarViewItems(context)),
+          ));
 
   Widget _loadingIndicator(BuildContext context) => Center(
-    child: CircularProgressIndicator(
-      color: context.theme.colorScheme.secondary,
-    ),
-  );
-
+        child: CircularProgressIndicator(
+          color: context.theme.colorScheme.secondary,
+        ),
+      );
 
   void _onStateChanged(PossibleMatchState state) {
     if (state is PossibleMatchLoadError) {
       handleFailureInUi(context: context, failure: state.failure);
     }
   }
-
 }

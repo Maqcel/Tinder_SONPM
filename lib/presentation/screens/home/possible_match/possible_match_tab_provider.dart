@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinder/domain/model/possible_match/possible_match.dart';
+import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/presentation/common/tabs/tab_definition.dart';
 import 'package:tinder/presentation/common/tabs/tab_provider.dart';
 import 'package:tinder/presentation/screens/home/possible_match/likes/likes_screen.dart';
@@ -16,9 +17,9 @@ class PossibleMatchTabProvider extends TabProvider<PossibleMatchesTabTypes> {
 
   @override
   List<TabDefinition<PossibleMatchesTabTypes>> get tabs => [
-    TabDefinition(index: 0, type: PossibleMatchesTabTypes.likes),
-    TabDefinition(index: 1, type: PossibleMatchesTabTypes.topPicks),
-  ];
+        TabDefinition(index: 0, type: PossibleMatchesTabTypes.likes),
+        TabDefinition(index: 1, type: PossibleMatchesTabTypes.topPicks),
+      ];
 
   @override
   List<Tab> getTabBarItems(BuildContext context) =>
@@ -30,13 +31,11 @@ class PossibleMatchTabProvider extends TabProvider<PossibleMatchesTabTypes> {
   Tab getTabBarItem(BuildContext context, PossibleMatchesTabTypes type) {
     switch (type) {
       case PossibleMatchesTabTypes.likes:
-        return const Tab(
-           text: "Likes",
-        );
+        return Tab(
+            text: context.localizations
+                .possibleMatchesLikedTab(possibleMatches.length.toString()));
       case PossibleMatchesTabTypes.topPicks:
-        return const Tab(
-           text: "Top picks",
-        );
+        return Tab(text: context.localizations.topPicksTab);
     }
   }
 
@@ -50,9 +49,9 @@ class PossibleMatchTabProvider extends TabProvider<PossibleMatchesTabTypes> {
   Widget getTabBarViewItem(BuildContext context, PossibleMatchesTabTypes type) {
     switch (type) {
       case PossibleMatchesTabTypes.likes:
-        return LikesScreen(descriptionTextPartOne: "Upgrade to Gold to see people", descriptionTextPartTwo: "who already liked you", screenType: "likes",matchList: possibleMatches);
+        return LikesScreen(matchList: possibleMatches);
       case PossibleMatchesTabTypes.topPicks:
-        return LikesScreen(descriptionTextPartOne: "Upgrade to Tinder Gold for", descriptionTextPartTwo: "more Top Picks!",screenType: "picks",matchList: topPicks);
+        return LikesScreen(matchList: topPicks);
     }
   }
 }
