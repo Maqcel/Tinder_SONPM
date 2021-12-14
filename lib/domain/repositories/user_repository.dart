@@ -104,6 +104,9 @@ class UserRepository {
     List<String> filteredPossibleMatchesUid =
         possibleMatchesUid.where((match) => match != "").toList();
 
+    // No possible matches to show
+    if (filteredPossibleMatchesUid.isEmpty) return [];
+
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> usersData =
         (await _firestore
                 .collection(Paths.usersPath)
@@ -139,7 +142,6 @@ class UserRepository {
         possibleMatchesUid.where((match) => match != "").toList();
 
     filteredPossibleMatchesUid.add(uid);
-
 
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> usersData =
         (await _firestore

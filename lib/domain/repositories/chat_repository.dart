@@ -15,16 +15,19 @@ import 'package:tinder/dto/user/user_chats_response_dto.dart';
 class ChatRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<Stream<QuerySnapshot>> createChatsStream({required String uid}) async {
+  Future<Stream<QuerySnapshot>?> createChatsStream(
+      {required String uid}) async {
     List<String> chatsId = UserChatsResponseDTO.fromJson(
             (await _firestore.collection(Paths.usersPath).doc(uid).get())
                 .data()!)
         .matches;
 
-    return _firestore
-        .collection(Paths.chatsPath)
-        .where(FieldPath.documentId, whereIn: chatsId)
-        .snapshots();
+    return chatsId.isNotEmpty
+        ? _firestore
+            .collection(Paths.chatsPath)
+            .where(FieldPath.documentId, whereIn: chatsId)
+            .snapshots()
+        : null;
   }
 
   Future<List<Chat>> getChatsFromSnapshot(

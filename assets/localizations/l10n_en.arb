@@ -39,6 +39,10 @@
   "@chatNoMatchesBodyText": {
     "description": "Bodytext displayed when user has no matches"
   },
+  "possibleMatchesNoMatchesBodyText": "When someone will like you they'll appear here, where you can see who likes you!",
+  "@possibleMatchesNoMatchesBodyText": {
+    "description": "Bodytext displayed when user has no matches in possible matches screen"
+  },
   "chatHasMatchesNewMatchesText": "New matches",
   "@chatHasMatchesNewMatchesText": {
     "description": "Header text displayed on chat screen as section with matches with no messages"
@@ -80,6 +84,10 @@
         "example": "7"
       }
     }
+  },
+  "topPicksTab": "Top Picks",
+  "@topPicksTab": {
+    "description": "top picks tab text"
   },
   "signinButtonLoginText": "Login",
   "@signinButtonLoginText": {
