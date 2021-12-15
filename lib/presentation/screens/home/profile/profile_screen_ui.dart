@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tinder/config/dimensions/padding_dimension.dart';
+import 'package:tinder/config/paths.dart';
 import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/domain/model/user/user_profile.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
@@ -21,19 +22,22 @@ class ProfileScreenUi extends StatelessWidget {
     ImagePicker imagePicker = ImagePicker();
 
     XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
-    File selectedImage = File(image!.path);
+    if (image != null) {
+      File selectedImage = File(image.path);
 
-    Reference ref = FirebaseStorage.instance.ref().child(_profile.uid);
-    await ref.putFile(selectedImage);
+      Reference ref = FirebaseStorage.instance.ref().child(_profile.uid);
+      await ref.putFile(selectedImage);
 
-    String url = await ref.getDownloadURL();
+      String url = await ref.getDownloadURL();
 
-    DocumentReference userReference =
-        FirebaseFirestore.instance.collection('users').doc(_profile.uid);
+      DocumentReference userReference = FirebaseFirestore.instance
+          .collection(Paths.usersPath)
+          .doc(_profile.uid);
 
-    await userReference.update({
-      'profile_photo_path': url,
-    });
+      await userReference.update({
+        'profile_photo_path': url,
+      });
+    }
   }
 
   const ProfileScreenUi(UserProfile profile, void Function() toSettings,

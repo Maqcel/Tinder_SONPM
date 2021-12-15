@@ -57,7 +57,7 @@ class _LikesScreenState extends State<LikesScreen> {
               Text(
                 match.name +
                     ',' +
-                    (DateTime.now().year - match.birth_date.year).toString(),
+                    (DateTime.now().year - match.birthDate.year).toString(),
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ],

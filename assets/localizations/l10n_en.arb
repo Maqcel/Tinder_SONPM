@@ -164,5 +164,17 @@
   "onboardingSubmitButtonText": "Submit",
   "@onboardingSubmitButtonText": {
     "description": "Button text for submiting onboarding form"
+  },
+  "peopleScreenSwipeNopeActionBadgeText": "NOPE",
+  "@peopleScreenSwipeNopeActionBadgeText": {
+    "description": "Badge text shown if user doesn't like seen person"
+  },
+  "peopleScreenSwipeLikeActionBadgeText": "LIKE",
+  "@peopleScreenSwipeLikeActionBadgeText": {
+    "description": "Badge text shown if user likes seen person"
+  },
+  "peopleScreenNoMoreUsersText": "No more users to show",
+  "@peopleScreenNoMoreUsersText": {
+    "description": "Where there is no more users to show"
   }
 }
