@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/domain/repositories/auth_repository.dart';
 import 'package:tinder/domain/repositories/chat_repository.dart';
+import 'package:tinder/domain/repositories/people_repository.dart';
 import 'package:tinder/domain/repositories/user_repository.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
 import 'package:tinder/presentation/screens/home/chat/cubit/chat_screen_cubit.dart';
+import 'package:tinder/presentation/screens/home/people/cubit/people_screen_cubit.dart';
 import 'package:tinder/presentation/screens/home/possible_match/cubit/possible_match_cubit.dart';
 import 'package:tinder/presentation/screens/home/profile/cubit/profile_screen_cubit.dart';
 import 'package:tinder/presentation/screens/main/navigation/main_router.dart';
@@ -52,6 +54,10 @@ class _MainScreenState extends State<MainScreen> {
               userRepository: context.read<UserRepository>(),
               authRepository: context.read<AuthRepository>(),
             ),
+          ),
+          BlocProvider<PeopleScreenCubit>(
+            create: (context) => PeopleScreenCubit(
+                peopleRepository: context.read<PeopleRepository>()),
           )
         ],
         child: Router(

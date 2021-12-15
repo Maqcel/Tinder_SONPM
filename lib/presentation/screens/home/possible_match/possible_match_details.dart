@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/config/theme/color_palette.dart';
 import 'package:tinder/domain/model/possible_match/possible_match.dart';
 import 'package:tinder/extensions/build_context_extension.dart';
@@ -18,8 +18,8 @@ class PossibleMatchDetails extends StatefulWidget {
 }
 
 class _PossibleMatchDetailsState extends State<PossibleMatchDetails> {
-
-  void toPossibleMatches() => context.read<MainNavigationCubit>().goBackToPossibleMatches();
+  void toPossibleMatches() =>
+      context.read<MainNavigationCubit>().goBackToPossibleMatches();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,9 @@ class _PossibleMatchDetailsState extends State<PossibleMatchDetails> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BackButton(onPressed: () => toPossibleMatches(),),
+          BackButton(
+            onPressed: () => toPossibleMatches(),
+          ),
           ClipRRect(
             child: SavedStateNetworkImage(
               url: widget.profile.photoUrl,
@@ -51,7 +53,7 @@ class _PossibleMatchDetailsState extends State<PossibleMatchDetails> {
             child: Text(
               widget.profile.name +
                   ", " +
-                  (DateTime.now().year - widget.profile.birth_date.year)
+                  (DateTime.now().year - widget.profile.birthDate.year)
                       .toString(),
               style: context.theme.textTheme.headline1,
             ),

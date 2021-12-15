@@ -94,12 +94,14 @@ class UserRepository {
             .docs;
 
     List<String> possibleMatchesUid = userUid
-        .map((document) => ((document.data()['user1'] != uid &&
-                document.data()['user2'] != uid)
-            ? ""
-            : document.data()['user1'] != uid
-                ? document.data()['user1']
-                : document.data()['user2']) as String)
+        .map(
+          (document) => ((document.data()['user1'] != uid &&
+                  document.data()['user2'] != uid)
+              ? ""
+              : document.data()['user1'] != uid
+                  ? document.data()['user1']
+                  : document.data()['user2']) as String,
+        )
         .toList();
     List<String> filteredPossibleMatchesUid =
         possibleMatchesUid.where((match) => match != "").toList();

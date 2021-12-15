@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinder/domain/repositories/auth_repository.dart';
 import 'package:tinder/domain/repositories/chat_repository.dart';
 import 'package:tinder/domain/repositories/onboarding_repository.dart';
+import 'package:tinder/domain/repositories/people_repository.dart';
 import 'package:tinder/domain/repositories/user_repository.dart';
 
 class AppRepositoryProviders {
@@ -17,6 +18,9 @@ class AppRepositoryProviders {
         ),
         RepositoryProvider<OnboardingRepository>(
           create: (context) => OnboardingRepository(),
+        ),
+        RepositoryProvider<PeopleRepository>(
+          create: (context) => PeopleRepository(),
         )
       ];
 }
